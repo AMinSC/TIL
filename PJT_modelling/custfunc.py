@@ -1,3 +1,5 @@
+import numpy as np
+
 # from kaggle
 # data set 최적화
 

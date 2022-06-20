@@ -1,3 +1,7 @@
+from custfunc import reduce_ram_usage
+import pandas as pd
+import gc
+
 # Drop Outlier
 
 def dropOutlier (df):
@@ -61,6 +65,8 @@ def encodeMatch (df):
 
 
 # Make Cols
+def makeCols (df) :
+    print("Making columns...")
     df["killPlace"] = df.groupby("matchId")["kills"].transform('rank', ascending=False)
     #data leakage 없는 killPlace data
 
