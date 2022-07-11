@@ -11,7 +11,27 @@
 </head>
 <body>
 
+<!--<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>배경 이미지</title>
+    <style>
+      body {background-image: url(https://www.insidesport.in/wp-content/uploads/2021/05/16-1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+
+    </style>
+  </head>
+</html>-->
+
+
+
 <div class="container">
+  <audio autoplay controls loop >
+    <source src="static/Champions_league.mp3"type="audio/mp3">
+  </audio>
+  <img src="{{url_for('static', filename='champions.png')}}" align="middle" />
   <h2>축구 몸값 예측</h2>
   <form method="GET" action="/value">
     <div class="form-group">
@@ -20,11 +40,11 @@
     </div>
     <div class="form-group">
       <label for="position">선수가 선호하는 포지션입니다. ex) 공격수, 수비수 등:</label>
-      <input type="number" class="form-control" id="position" placeholder="Enter (0 ~ 3)" name="post">
+      <input type="number" class="form-control" id="position" placeholder="Enter ST:3 / MF:2 / DF:0 / GK:1" name="post">
     </div>
     <div class="form-group">
-      <label for="prefer_foot">선수가 선호하는 발입니다. ex) 오른발:</label>
-      <input type="number" class="form-control" id="prefer_foot" placeholder="Enter 오른발:0 / 왼발:1" name="foot">
+      <label for="prefer_foot">선수가 선호하는 발입니다.:</label>
+      <input type="number" class="form-control" id="prefer_foot" placeholder="Enter 오른발:1 / 왼발:0" name="foot">
     </div>
     <div class="form-group">
       <label for="reputation">선수가 유명한 정도입니다. ex) 높은 수치일 수록 유명한 선수:</label>
