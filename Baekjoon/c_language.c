@@ -1,4 +1,5 @@
 // 백준 C언어로 다시 문제 풀기
+// studing.. 여러가지 코드 보기
 
 #include <stdio.h>
 
