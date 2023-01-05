@@ -6,17 +6,30 @@ int main(void)
 {
 	int h, m;
 	scanf("%d %d", &h, &m);
+	
+	int t, c = 0;
+	scanf("%d", &t);
 
-	if ( m > 45 ) { printf("%d %d\n", h, m-45);}
-	else if ( m < 45) 
-	{ 
-		h -= 1;
-		m += 15;
-		if (0 > h) 
-		{ 
-			printf("%d %d\n", 23, m); 
+	m += t;
+
+	if (m < 59)
+	{
+		printf("%d %d\n", h, m);
+	}
+	else if (m > 59)
+	{
+		while(m >= 60)
+		{
+			c++;
+			m -= 60;
 		}
-		else
+		h += c;
+		if (h > 23)
+		{		
+			h -= 23;
+			printf("%d %d\n", h, m);
+		}
+		else if (h <= 23) 
 		{
 			printf("%d %d\n", h, m);
 		}
