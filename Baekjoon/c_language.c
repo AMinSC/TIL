@@ -11,28 +11,28 @@ int main(void)
 	int t, c = 0;
 	scanf("%d", &t);
 
-	m += t;
+	t += m;
 
-	if (m < 59)
+	if ( t <= 59)
 	{
-		printf("%d %d\n", h, m);
+		printf("%d %d\n", h, t);
 	}
-	else if (m > 59)
+	else if ( t > 59)
 	{
-		while(m >= 60)
+		while(t > 59)
 		{
 			c++;
-			m -= 60;
+			t -= 60;
 		}
 		h += c;
 		if (h > 23)
-		{		
-			h -= 23;
-			printf("%d %d\n", h, m);
-		}
-		else if (h <= 23) 
 		{
-			printf("%d %d\n", h, m);
+			h -= 24;
+			printf("%d %d\n", h, t);
+		}
+		else if (h <= 23)
+		{
+			printf("%d %d\n", h, t);
 		}
 	}
 	return 0;
