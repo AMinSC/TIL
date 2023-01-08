@@ -5,17 +5,30 @@
 
 int main(void)
 {
-	int a[32];
-	for (int i = 0; i < 28; i++)
+	int a[16], b[16];
+	for (int i = 0; i < 10; i++)
 	{
-		int n;
-		scanf("%d", &n);
-		a[n-1] = 1;
+		scanf("%d", &a[i]);
+		b[i] = a[i] % 42;
 	}
-	for (int i = 0; i < 30; i++)
+
+	int c = 0;
+	for (int i = 0; i < 10; i++)
 	{
-		if (a[i] == 0){printf("%d\n", i+1);}
+		//printf("%d\n", b[i]);
+		for (int j = i+1; j < 10; j++)
+		{
+			if (b[i] == b[j])
+			{
+				c++;
+				break;
+			}
+		}
 	}
+	int d = c*2;
+	int f = 10 - d;
+	printf("\n\n");
+	printf("%d\n", f+c);
 	return 0;
 }
 
