@@ -5,36 +5,28 @@
 
 int main(void)
 {
-	int h, m;
-	scanf("%d %d", &h, &m);
+	int n, c = 0;
+	scanf("%d", &n);
+	int a = n+1;
+	if (n < 10) { n*=10; }
+	int f, s;
+	f = n / 10;
+	s = n % 10;
 	
-	int t, c = 0;
-	scanf("%d", &t);
-
-	t += m;
-
-	if ( t <= 59)
+	while(n != a)
 	{
-		printf("%d %d\n", h, t);
+		a = f + s; // 8   14
+		f = s; // 6  8
+		if (a > 9) { s = a % 10; }
+		else if (a <= 9) {s = a;} // 8  14
+		a = (f*10) + s; // 68
+		c++;
+		f = a / 10; // 6
+		s = a % 10; // 8
+		//printf("%d %d %d\n", f, s, a);
 	}
-	else if ( t > 59)
-	{
-		while(t > 59)
-		{
-			c++;
-			t -= 60;
-		}
-		h += c;
-		if (h > 23)
-		{
-			h -= 24;
-			printf("%d %d\n", h, t);
-		}
-		else if (h <= 23)
-		{
-			printf("%d %d\n", h, t);
-		}
-	}
+	printf("%d\n", c);
+	
 	return 0;
 }
 
