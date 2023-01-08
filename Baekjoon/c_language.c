@@ -1,32 +1,43 @@
 // 백준 C언어로 다시 문제 풀기
-// studing.. 여러가지 코드 보기
+// studing..
 
 #include <stdio.h>
 
 int main(void)
 {
-	int n, c = 0;
-	scanf("%d", &n);
-	int a = n+1;
-	if (n < 10) { n*=10; }
-	int f, s;
-	f = n / 10;
-	s = n % 10;
-	
-	while(n != a)
+	int a[32];
+	for (int i = 0; i < 28; i++)
 	{
-		a = f + s; // 8   14
-		f = s; // 6  8
-		if (a > 9) { s = a % 10; }
-		else if (a <= 9) {s = a;} // 8  14
-		a = (f*10) + s; // 68
-		c++;
-		f = a / 10; // 6
-		s = a % 10; // 8
-		//printf("%d %d %d\n", f, s, a);
+		scanf("%d", &a[i]);
 	}
-	printf("%d\n", c);
-	
+	int c=0;
+	while(c < 28)
+	{
+	    for (int i = 0; i < 28; i++)
+		{
+			if (a[i] > a[i+1])
+			{
+				if (1<= a[i+1] & a[i+1] <= 30)
+				{
+					int b = a[i];
+					a[i] = a[i+1];
+					a[i+1] = b;
+				}
+			}
+		}
+		c++;
+	}
+	printf("\n\n");
+	int b[32];
+	for (int i = 0; i < 30; i++)
+	{
+		b[i] = i+1;
+		for (int j = 0; j < 28; j++)
+		{
+			if (b[i] == a[j]) {b[i] = 0;}
+		}
+		if (b[i] > 0) {printf("%d\n", b[i]);}
+	}
 	return 0;
 }
 
