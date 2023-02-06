@@ -2,33 +2,40 @@
 // studing..
 
 #include <stdio.h>
+#include	<stdlib.h>
 
 int main(void)
 {
-	int a[16], b[16];
-	for (int i = 0; i < 10; i++)
-	{
-		scanf("%d", &a[i]);
-		b[i] = a[i] % 42;
-	}
+	float	*total_exam;
+	float	answer = 0;
+	int	cnt, exam, idx = 0, first_idx = 0, second_idx;
 
-	int c = 0;
-	for (int i = 0; i < 10; i++)
+	scanf("%d", &cnt);
+	total_exam = (float *)malloc(sizeof(float) * cnt);
+	while (idx < cnt)
 	{
-		//printf("%d\n", b[i]);
-		for (int j = i+1; j < 10; j++)
+		scanf("%d", &exam);
+		total_exam[idx] = exam;
+		idx++;
+	}
+	while (first_idx < cnt - 1)
+	{
+		second_idx = first_idx + 1;
+		if (total_exam[first_idx] > total_exam[second_idx])
 		{
-			if (b[i] == b[j])
-			{
-				c++;
-				break;
-			}
+			int	tmp;
+			tmp = total_exam[first_idx];
+			total_exam[first_idx] = total_exam[second_idx];
+			total_exam[second_idx] = tmp;
 		}
+		first_idx++;
 	}
-	int d = c*2;
-	int f = 10 - d;
-	printf("\n\n");
-	printf("%d\n", f+c);
-	return 0;
+	idx = 0;
+	while (idx < cnt)
+	{
+		total_exam[idx] = total_exam[idx] / total_exam[cnt - 1] * 100;
+		answer += total_exam[idx];
+		idx++;
+	}
+	printf("%.4f\n", answer /= cnt); 
 }
-
