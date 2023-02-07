@@ -4,58 +4,71 @@
 #include 	<stdio.h>
 #include	<stdlib.h>
 
-int	ans_check(char c, char b)
+// 각 반의 총 합 점수 구하는 함수
+double	score_check(double *arr)
 {
-	if (c == b)
-		return (1);
-	return (0);
+	int	i = 0;
+	double score = 0;
+
+	while (arr[i]) // 배열을 돌면서 score변수에 더함
+	{
+		score += arr[i];
+		i++;
+	}
+	return (score); // 반환
 }
 
-int	point_check(char *arr, char c)
+// 총합의 평균을 초과하는 점수만 count해서 100분율 내서 반환하는 함수
+double	class_check(void)
 {
-	int	i = 0, total_point = 0, point = 0;
+	double	*class;
+	double	exam_score, total_score, student = 0, cnt = 0;
+	int	idx = 0;
 
-	while (arr[i])
+	scanf("%lf", &student); // 몇 명인지 input으로 받음
+	class = (double *)malloc(sizeof(double) * student);
+	if (!class)
+		return (0);
+
+	while (idx < student) // 각 학생의 점수를 배열에 저장
 	{
-		if (ans_check(arr[i], c) && !ans_check(arr[i - 1], c))
-		{
-			point = 1;
-			i++;
-		}
-		else if (ans_check(arr[i], c) && ans_check(arr[i - 1], c))
-		{
-			point++;
-			i++;
-		}
-		while (arr[i] && !ans_check(arr[i], c))
-			i++;
-		total_point += point;
+		scanf("%lf", &exam_score);
+		class[idx] = exam_score;
+		idx++;
 	}
-	return (total_point);
+	total_score = score_check(class); // 총점을 구하는 함수
+	total_score /= student; // 총점을 학생수로 나눔 (평균)
+	idx = 0;
+	while (idx < student) // 평균 초과되는 인원 체크
+	{
+		if (total_score < class[idx])
+			cnt++;
+		idx++;
+	}
+	student = 100 / student; // 100분율을 구하기 위해 100을 학생수로 나눔
+	//cnt *= student;
+	return (cnt *= student); // 100으로 나눈 값과 평균을 넘는 학생을 곱해서 반환
 }
 
 int main(void)
 {
-	char answer[64];
-	char ans = 'O';
-	int	*ans_point;
-	int	total_idx = 0, idx = 0;
+	double	*class;
+	int	class_num = 0, idx = 0;
 
-	scanf("%d", &total_idx);
-	ans_point = (int *)malloc(sizeof(int) * total_idx);
-	if (!ans_point)
+	scanf("%d", &class_num); // 몇 반까지 있는지 input으로 받음
+	class = (double *)malloc(sizeof(double) * class_num);
+	if (!class)
 		return (0);
 
-	while (idx < total_idx)
+	while (idx < class_num) // input으로 받은 반까지 반복문을 돌며 100분율 반환값을 배열에 저장
 	{
-		scanf("%s", answer);
-		ans_point[idx] = point_check(answer, ans); // point_check func
+		class[idx] = class_check(); // class_check func
 		idx++;
 	}
 	idx = 0;
-	while (idx < total_idx)
+	while (idx < class_num) // 저장된 값을 %를 붙혀서 소수점 셋째 자리까지 출력
 	{
-		printf("%d\n", ans_point[idx]);
+		printf("%.3f%%\n", class[idx]);
 		idx++;
 	}
 }
