@@ -5,3 +5,4 @@ for i in range(T):
 	s = arr[1]
 	for j in range(len(s)):
 		print(s[j] * num, end='')
+	print()
