@@ -19,7 +19,7 @@ class Authorized:
 					)
 		# super().__setitem__(key, value)
 	
-	def __init__(slef, key, value):
+	def __init__(self, key, value):
 			self.key = key
 			self.value = value
 
