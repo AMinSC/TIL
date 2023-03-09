@@ -42,4 +42,5 @@ class Solution:
 
 # string = list(map(str, input()))
 string = input()
-Solution.is_palindrome_check(0, string)
+palindrome = Solution()
+palindrome.is_palindrome_check(string)
