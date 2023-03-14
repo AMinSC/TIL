@@ -1,8 +1,5 @@
-from pydantic import BaseModel
-
-
 # 가게 등록 클래스
-class FoodStore(BaseModel):
+class FoodStore:
 
     def __init__(self, store_name: str, open_hours: int, close_hours: int) -> None:
         if not isinstance(store_name, str):
@@ -19,6 +16,17 @@ class FoodStore(BaseModel):
             raise TypeError(f"{close_hours} is integer.")
         elif isinstance(close_hours, int):
             self._close_hours = close_hours
+
+    @property
+    def store_name(self):
+        return self._store_name
+
+    @store_name.setter
+    def store_name(self, new_name):
+        if not isinstance(new_name, str):
+            raise TypeError(f"{self._store_name} is string.")
+        elif isinstance(new_name, str):
+            self._store_name = new_name
 
     # 가게 등록
     def register_store(self) -> None:
@@ -70,3 +78,7 @@ class Order(Menu):
     # 주문 취소
     def order_cancel(self):
         pass
+
+
+if __name__ == "__main__":
+    # 클래스 재 정의 필요
