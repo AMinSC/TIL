@@ -5,12 +5,12 @@ ALL_SPACE = list("123456789")  # TTTBoard 딕셔너리를 위한 키
 X, O, BLANK = "X", "O", " "  # 문자열 값을 위한 상수
 
 
-def main():
+def ttt_game():
     """틱택토 게임을 실행합니다."""
     print("틱택토 게임에 오신 당신을 환영합니다 !")
     if input("미니 보드를 사용하겠습니까? Y/N  ").lower().startswith('y'):
         # game_board = MiniBoard()
-        game_board = HydridBoard()  # HybridBoard 객체를 생성한다.
+        game_board = HybridBoard()  # HybridBoard 객체를 생성한다.
     else:
         # game_board = TTTBoard()  # TTT_board 객체를 생성한다.
         game_board = HintBoard()  # HintBoard객체를 생성한다.
@@ -24,6 +24,8 @@ def main():
         while not game_board.is_valid_place(move):
             print(f"{current_player}의 움직임은? (1-9)")
             move = input()
+            if game_board.board_check(move):
+                continue  # board가 빈곳이 아니라면 다시 움직인다.
         game_board.update_board(move, current_player)  # 움직임을 만든다
 
         # 게임이 끝났는지 확인한다.
@@ -84,6 +86,12 @@ class TTTBoard:
         """말판의 space를 player로 설정한다."""
         self._spaces[space] = player
 
+    def board_check(self, space):
+        """기존 board가 비어있는지 확인"""
+        if self._spaces[space] != BLANK:
+            return True
+        return False
+
 
 class MiniBoard(TTTBoard):
     def get_board_str(self):
@@ -136,10 +144,10 @@ class HintBoard(TTTBoard):
         return board_str
 
 
-class HydridBoard(HintBoard, MiniBoard):
+class HybridBoard(HintBoard, MiniBoard):
     pass
 
 
 if __name__ == "__main__":
-    main()  # 임포트하지 않고 이 모듈이 실행되면 main()을 호출한다.
-    # print(HydridBoard.mro())
+    ttt_game()  # 임포트하지 않고 이 모듈이 실행되면 main()을 호출한다.
+    # print(HybridBoard.mro())

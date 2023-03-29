@@ -18,17 +18,17 @@ assert len(COLUMN_LABELS) == BOARD_WIDTH
 # 말판을 표시하기 위한 템플릿 문자열
 BOARD_TEMPLATE = """
     +1234567+
-    +-------+
+    +ㅡㅡ-ㅡㅡ+
     |{}{}{}{}{}{}{}|
     |{}{}{}{}{}{}{}|
     |{}{}{}{}{}{}{}|
     |{}{}{}{}{}{}{}|
     |{}{}{}{}{}{}{}|
     |{}{}{}{}{}{}{}|
-    +-------+"""
+    +ㅡㅡ-ㅡㅡ+"""
+# 말판 개선
 
-
-def main():
+def four_in_a_row():
     """사목 게임을 실행한다."""
     print(
         """사목, 작성자: Al Sweigart al@inventwithpython.com
@@ -113,6 +113,7 @@ def get_player_move(player_tile, board):
 
         # 가득 찬 열이면, 움직임 명령을 다시 요청한다.
         if board[column_index, 0] != EMPTY_SPACE:
+            display_board(board)  # 한 열이 가득 찼을 때, 진행 상태를 알려주지 않아 수정.
             print("열이 꽉 차 있으므로, 다른 열을 선택해주십시오.")
             continue  # 플레이어에게 움직임 명령을 다시 요청한다.
 
@@ -181,4 +182,4 @@ def is_winner(player_tile, board):
 
 # 이 프로그램이 (임포트하지 않고) 실행되면, 게임을 시작한다.
 if __name__ == "__main__":
-    main()
+    four_in_a_row()

@@ -10,7 +10,7 @@ TOTAL_DISKS = 5  # 원판이 많을수록 퍼즐은 더 어려워진다.
 SOLVED_TOWER = list(range(TOTAL_DISKS, 0, -1))
 
 
-def main():
+def tower_of_hanoi():
     """하노이 탑 게임을 실행한다."""
     print(
         """하노이 탑, 작성자: Al Sweetheart al@inventwithpython.com
@@ -22,14 +22,14 @@ def main():
         """
     )
 
-    """towers 딕셔너리 키 'A', 'B', 'C'와 탑에 쌓인 원판을 표현하는 리스트
+    """towers 딕셔너리 키 'Z', 'X', 'C'와 탑에 쌓인 원판을 표현하는 리스트
     형태의 값을 갖고 있다.  리스트는 다양한 크기의 원판을 표현하는 정수를 포함하며,
     리스트의 시작은 탑의 가장 아래 바닥이다.  원판 다섯 개로 시작하는 게임의 경우에는
     리스트 [5, 4, 3, 2, 1]가 완성된 탑을 표현한다.
     리스트 []는 탑에 쌓인 원판이 없을을 나타낸다.  리스트 [1, 3]은 작은 원판 위에
     큰 원판이 있으며, 유효하지 않은 구성이다.  리스트 [3, 1]이 허용되는 이유는
     작은 원판이 큰 원판 상단에 올라갈 수 있기 때문이다."""
-    towers = {"A": copy.copy(SOLVED_TOWER), "B": [], "C": []}
+    towers = {"Z": copy.copy(SOLVED_TOWER), "X": [], "C": []}
 
     while True:  # 이 루프문이 한 번 순회할 때마다 한 턴을 진행한다.
         # 탑과 원판을 표시한다
@@ -43,7 +43,7 @@ def main():
         towers[to_tower].append(disk)
 
         # 사용자가 퍼즐을 풀었는지 확인한다.
-        if SOLVED_TOWER in (towers["B"], towers["C"]):
+        if SOLVED_TOWER in (towers["X"], towers["C"]):
             display_towers(towers)  # 마지막으로 탑을 한 번 더 표시한다.
             print("퍼즐을 풀었습니다!  참 잘했습니다!")
             sys.exit()
@@ -54,7 +54,7 @@ def get_player_move(towers):
 
     while True:  # 플레이어가 유효한 이동 명령을 입력할 때까지 계속 요청한다.
         print('탑의 "시작"과 "끝"의 글자 또는 QUIT를 입력하십시오.')
-        print("(예: 탑 A에서 탑 B로 원판을 이동하려면 AB를 입력합니다.)")
+        print("(예: 탑 Z에서 탑 X로 원판을 이동하려면 ZX를 입력합니다.)")
         print()
         response = input("> ").upper().strip()
 
@@ -63,8 +63,8 @@ def get_player_move(towers):
             sys.exit()
 
         # 사용자가 유효한 탑 문자를 입력했는지 확인한다.
-        if response not in ("AB", "AC", "BA", "BC", "CA", "CB"):
-            print("AB, AC, BA, BC, CA, CB 중 하나를 입력하십시오.")
+        if response not in ("ZX", "ZC", "XZ", "XC", "CZ", "CX"):  # 편의성 개선 ABC -> ZXC
+            print("ZX, ZC, XZ, XC, CZ, CX 중 하나를 입력하십시오.")
             continue  # 플에이어에게 이동 명령을 다시 요청한다.
 
         # 더 설명적인 변수 이름을 사용한다.
@@ -72,6 +72,7 @@ def get_player_move(towers):
 
         if len(towers[from_tower]) == 0:
             # from 탑은 비어 있을 수 없다.
+            display_towers(towers)  # 비어 있는 탑을 선택할 경우, 탑이 노출되지 않아 수정.
             print("원판이 없는 탑을 선택했습니다.")
             continue  # 플레이어에게 이동 명령을 다시 요청한다.
         elif len(towers[to_tower]) == 0:
@@ -90,16 +91,16 @@ def display_towers(towers):
 
     # 세 탑을 표시한다.
     for level in range(TOTAL_DISKS, -1, -1):
-        for tower in (towers["A"], towers["B"], towers["C"]):
+        for tower in (towers["Z"], towers["X"], towers["C"]):
             if level >= len(tower):
                 display_disk(0)  # 원판이 없는 빈 기둥을 표시한다.
             else:
                 display_disk(tower[level])  # 원판을 표시한다.
         print()
 
-    # 탑 이름 A, B, C를 표시한다.
+    # 탑 이름 Z, X, C를 표시한다.
     empty_space = " " * TOTAL_DISKS
-    print("{0} A{0}{0} B{0}{0} C\n".format(empty_space))
+    print("{0} Z{0}{0} X{0}{0} C\n".format(empty_space))
 
 
 def display_disk(width):
@@ -118,4 +119,4 @@ def display_disk(width):
 
 # 이 프로그램이 (임포트되지 않고) 단독으로 실행되면, 게임을 시작한다.
 if __name__ == "__main__":
-    main()
+    tower_of_hanoi()
