@@ -9,9 +9,10 @@ def main():
     """틱택토 게임을 실행합니다."""
     print("틱택토 게임에 오신 당신을 환영합니다 !")
     if input("미니 보드를 사용하겠습니까? Y/N  ").lower().startswith('y'):
-        game_board = MiniBoard()
+        # game_board = MiniBoard()
+        game_board = HydridBoard()  # HybridBoard 객체를 생성한다.
     else:
-        # game_board = TTTBoard()  # TTT_board 객체를 생선한다.
+        # game_board = TTTBoard()  # TTT_board 객체를 생성한다.
         game_board = HintBoard()  # HintBoard객체를 생성한다.
     current_player, next_player = X, O  # X가 선공, O가 후공
 
@@ -135,6 +136,10 @@ class HintBoard(TTTBoard):
         return board_str
 
 
+class HydridBoard(HintBoard, MiniBoard):
+    pass
+
+
 if __name__ == "__main__":
     main()  # 임포트하지 않고 이 모듈이 실행되면 main()을 호출한다.
-
+    # print(HydridBoard.mro())
