@@ -1,4 +1,5 @@
 # tictactoe_oop.py, 객체지향 틱택토 게임
+import copy
 
 ALL_SPACE = list("123456789")  # TTTBoard 딕셔너리를 위한 키
 X, O, BLANK = "X", "O", " "  # 문자열 값을 위한 상수
@@ -7,7 +8,11 @@ X, O, BLANK = "X", "O", " "  # 문자열 값을 위한 상수
 def main():
     """틱택토 게임을 실행합니다."""
     print("틱택토 게임에 오신 당신을 환영합니다 !")
-    game_board = TTTBoard()  # TTT_board 객체를 생선한다.
+    if input("미니 보드를 사용하겠습니까? Y/N  ").lower().startswith('y'):
+        game_board = MiniBoard()
+    else:
+        # game_board = TTTBoard()  # TTT_board 객체를 생선한다.
+        game_board = HintBoard()  # HintBoard객체를 생성한다.
     current_player, next_player = X, O  # X가 선공, O가 후공
 
     while True:
@@ -79,5 +84,57 @@ class TTTBoard:
         self._spaces[space] = player
 
 
+class MiniBoard(TTTBoard):
+    def get_board_str(self):
+        """말판의 텍스트 표현을 작게 하는 문자열을 반환한다."""
+        # 공백 한 칸을 '.'으로 치환한다.
+        dot = '.'
+        for space in ALL_SPACE:
+            if self._spaces[space] == BLANK:
+                self._spaces[space] = dot
+
+        board_str = f"""
+        {self._spaces['1']}{self._spaces['2']}{self._spaces['3']} 123
+        {self._spaces['4']}{self._spaces['5']}{self._spaces['6']} 456
+        {self._spaces['7']}{self._spaces['8']}{self._spaces['9']} 789"""
+
+        # 공백 한 칸을 '.'으로 치환한다.
+        for space in ALL_SPACE:
+            if self._spaces[space] == dot:
+                self._spaces[space] = BLANK
+        return board_str
+
+
+class HintBoard(TTTBoard):
+    def get_board_str(self):
+        """힌트가 포함된 말판을 텍스트로 표현하는 문자열을 반환한다."""
+        board_str = super().get_board_str()  # TTTBoard에 있는 get_board_str()를 호출한다.
+
+        x_can_win = False
+        o_can_win = False
+        original_space = self._spaces  # _spaces를 백업한다.
+        for space in ALL_SPACE:  # 모든 칸을 확인한다.
+            # 이 칸에서 X 이동을 시뮬레이션한다.
+            self._spaces = copy.copy(original_space)
+            if self._spaces[space] == BLANK:
+                self._spaces[space] = X
+            if self.is_winner(X):
+                x_can_win = True
+
+            # 이 칸에서 O 이동을 시뮬레이션한다.
+            self._spaces = copy.copy(original_space)
+            if self._spaces[space] == BLANK:
+                self._spaces[space] = O
+            if self.is_winner(O):
+                o_can_win = True
+        if x_can_win:
+            board_str += "\nX는 한 번만 더 이동하면 승리할 수 있습니다."
+        if o_can_win:
+            board_str += "\nO는 한 번만 더 이동하면 승리할 수 있습니다."
+        self._spaces = original_space
+        return board_str
+
+
 if __name__ == "__main__":
     main()  # 임포트하지 않고 이 모듈이 실행되면 main()을 호출한다.
+
