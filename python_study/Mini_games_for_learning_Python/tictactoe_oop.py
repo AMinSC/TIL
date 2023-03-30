@@ -1,14 +1,15 @@
 # tictactoe_oop.py, 객체지향 틱택토 게임
 import copy
+import sys
 
 ALL_SPACE = list("123456789")  # TTTBoard 딕셔너리를 위한 키
-X, O, BLANK = "X", "O", " "  # 문자열 값을 위한 상수
+X, O = "X", "O"  # 문자열 값을 위한 상수
 
 
 def ttt_game():
     """틱택토 게임을 실행합니다."""
     print("틱택토 게임에 오신 당신을 환영합니다 !")
-    if input("미니 보드를 사용하겠습니까? Y/N  ").lower().startswith('y'):
+    if input("미니 보드를 사용하겠습니까? Y/n  > ").lower().startswith('y'):
         # game_board = MiniBoard()
         game_board = HybridBoard()  # HybridBoard 객체를 생성한다.
     else:
@@ -20,12 +21,24 @@ def ttt_game():
         print(game_board.get_board_str())  # 화면에 말판을 표시한다.
 
         # 플레이어가 1-9 사이 숫자를 입력할 때까지 계속해서 요청한다.
-        move = 0
-        while not game_board.is_valid_place(move):
+        while True:
             print(f"{current_player}의 움직임은? (1-9)")
-            move = input()
-            if game_board.board_check(move):
-                continue  # board가 빈곳이 아니라면 다시 움직인다.
+            move = input("> ").upper()
+
+            if move == "QUIT":  # 게임 종료 조건
+                print("이용해 주셔서 감사합니다!")
+                sys.exit()
+
+            # 숫자가 아닌 문자가 올 경우 다시 요청
+            try:
+                move = int(move)
+                if 1 <= move <= 9:
+                    if not game_board.is_valid_place(move):
+                        if game_board.duplicate_check(move):  # 말판이 비어있는지 체크
+                            break
+            except ValueError:
+                print("숫자 1 ~ 9 선택해 주세요 !")
+
         game_board.update_board(move, current_player)  # 움직임을 만든다
 
         # 게임이 끝났는지 확인한다.
@@ -46,21 +59,21 @@ class TTTBoard:
         """비어 있는 새 틱택토 말판을 생성한다."""
         self._spaces = {}  # 말판은 파이썬 딕셔너리로 표현된다.
         for space in ALL_SPACE:
-            self._spaces[space] = BLANK  # 모든 칸은 비어 있는 상태로 시작된다.
+            self._spaces[space] = int(space)  # 모든 칸은 비어 있는 상태로 시작된다.
 
     def get_board_str(self):
         """말판을 텍스트로 표현하는 문자열을 반환한다."""
         return f"""
-        {self._spaces['1']}|{self._spaces['2']}|{self._spaces['3']}  1 2 3
+        {self._spaces['1']}|{self._spaces['2']}|{self._spaces['3']}
         -+-+-
-        {self._spaces['4']}|{self._spaces['5']}|{self._spaces['6']}  4 5 6
+        {self._spaces['4']}|{self._spaces['5']}|{self._spaces['6']}
         -+-+-
-        {self._spaces['7']}|{self._spaces['8']}|{self._spaces['9']}  7 8 9"""
+        {self._spaces['7']}|{self._spaces['8']}|{self._spaces['9']}"""
 
     def is_valid_place(self, space):
         """이 말판의 space가 칸을 가리키는 유효한 번호이며, 칸이 비어 있을 경우
         True를 반환한다."""
-        return 0 < int(space) < 10 and (space in ALL_SPACE or self._spaces[space] == BLANK)
+        return 0 < int(space) < 10 and (space in ALL_SPACE and self._spaces[space] == int(space))
 
     def is_winner(self, player):
         """ 플레이어가 이 게임에서 승자인 경우 True를 반환한다."""
@@ -78,19 +91,24 @@ class TTTBoard:
     def is_board_full(self):
         """말판의 모든 칸이 차 있다면 True를 반환한다."""
         for space in ALL_SPACE:
-            if self._spaces[space] == BLANK:
+            if self._spaces[space] == int(space):
                 return False  # 한 칸이라도 비어 있으면 False를 반환한다.
         return True  # 어느 칸도 비어 있지 않으면, True를 반환한다.
 
     def update_board(self, space, player):
         """말판의 space를 player로 설정한다."""
+        space = str(space)
         self._spaces[space] = player
 
-    def board_check(self, space):
-        """기존 board가 비어있는지 확인"""
-        if self._spaces[space] != BLANK:
-            return True
-        return False
+    def duplicate_check(self, space):
+        """사용자가 원하는 위치가 비어있는지 체크"""
+        space = str(space)
+        if self._spaces[space] == int(space):
+            return True  # 위치가 비어있다면 True를 반환
+
+        print(self.get_board_str())  # 확인을 위해 말판 출력
+        print(f"이미 자리에 '{self._spaces[space]}'가 있습니다.\n비어있는 위치로 옮겨주세요!")
+        return False  # 비어있지 않다면 False를 반환
 
 
 class MiniBoard(TTTBoard):
@@ -99,7 +117,7 @@ class MiniBoard(TTTBoard):
         # 공백 한 칸을 '.'으로 치환한다.
         dot = '.'
         for space in ALL_SPACE:
-            if self._spaces[space] == BLANK:
+            if self._spaces[space] == int(space):
                 self._spaces[space] = dot
 
         board_str = f"""
@@ -110,7 +128,7 @@ class MiniBoard(TTTBoard):
         # 공백 한 칸을 '.'으로 치환한다.
         for space in ALL_SPACE:
             if self._spaces[space] == dot:
-                self._spaces[space] = BLANK
+                self._spaces[space] = int(space)
         return board_str
 
 
@@ -125,14 +143,14 @@ class HintBoard(TTTBoard):
         for space in ALL_SPACE:  # 모든 칸을 확인한다.
             # 이 칸에서 X 이동을 시뮬레이션한다.
             self._spaces = copy.copy(original_space)
-            if self._spaces[space] == BLANK:
+            if self._spaces[space] == int(space):
                 self._spaces[space] = X
             if self.is_winner(X):
                 x_can_win = True
 
             # 이 칸에서 O 이동을 시뮬레이션한다.
             self._spaces = copy.copy(original_space)
-            if self._spaces[space] == BLANK:
+            if self._spaces[space] == int(space):
                 self._spaces[space] = O
             if self.is_winner(O):
                 o_can_win = True

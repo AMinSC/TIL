@@ -10,7 +10,7 @@ def main():
 
         game_list = ['1', '2', '3']
 
-        if ans in game_list:
+        if ans in game_list:  # try, except 문?
             ans = int(ans)
             if 1 <= ans <= 3:
                 if ans == 1:
