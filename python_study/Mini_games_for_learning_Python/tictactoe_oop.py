@@ -32,7 +32,7 @@ def ttt_game():
             # 숫자가 아닌 문자가 올 경우 다시 요청
             try:
                 move = int(move)
-                if 1 <= move <= 9:
+                if 1 <= move <= 9:  # 조건문을 줄이고 any() 함수로 바꿀지 고민
                     if not game_board.is_valid_place(move):
                         if game_board.duplicate_check(move):  # 말판이 비어있는지 체크
                             break

@@ -28,6 +28,7 @@ BOARD_TEMPLATE = """
     +ㅡㅡ-ㅡㅡ+"""
 # 말판 개선
 
+
 def four_in_a_row():
     """사목 게임을 실행한다."""
     print(
