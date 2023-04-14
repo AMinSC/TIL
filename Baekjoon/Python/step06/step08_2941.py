@@ -1,35 +1,30 @@
-from typing import List
-
 string = input()
-end = len(string)
-cnt = 0
+t_len = len(string)
 idx = 0
+cnt = 0
 
 
-def keyword_check(subject: List[str], i: int) -> int:
-    croatia = ["c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="]
-
-    for kw in croatia:
-        if subject[i] == kw[0]:
-            if subject[i + 1] == kw[1]:
-                if kw == croatia[2]:
-                    if subject[i + 2] == kw[2]:
-                        return 3
-                return 2
-    return 0
+def keyword_checking(st: str) -> bool:
+    keywords = ["c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="]
+    for keyword in keywords:
+        if st == keyword:
+            return True
+    return False
 
 
-while idx < end:
-    ans = keyword_check(string, idx)
-    if ans == 3:
-        cnt += 1
-        idx += 3
-    elif ans == 2:
-        cnt += 1
-        idx += 2
-    else:
-        cnt += 1
-        idx += 1
+while idx < t_len:
+    if (idx + 2) < t_len:
+        if keyword_checking(string[idx:idx+3]):
+            idx += 3
+            cnt += 1
+            continue
+    if (idx + 1) < t_len:
+        if keyword_checking(string[idx:idx+2]):
+            idx += 2
+            cnt += 1
+            continue
+    idx += 1
+    cnt += 1
 
 
 print(cnt)
