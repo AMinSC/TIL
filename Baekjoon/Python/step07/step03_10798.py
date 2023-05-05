@@ -1,15 +1,16 @@
-a_list = []
-max_list = 0
-for i in range(5):
-    a = list(input())
-    a_list.append(a)
-    max_list = len(a)
-    if i > 0 and len(a_list[i-1]) > max_list:
-        max_list = len(a_list[i-1])
+board = []
 
-for i in range(max_list):
+for i in range(5):
+    user_str = input()
+    board.append(user_str)
+
+max_len = max(len(val) for val in board)
+test = []
+for i in range(max_len):
     for j in range(5):
         try:
-            print(a_list[j][i], end='')
+            test.append(board[j][i])
         except:
             pass
+
+print(*test, sep="")
