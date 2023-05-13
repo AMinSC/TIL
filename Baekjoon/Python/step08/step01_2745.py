@@ -4,6 +4,7 @@ N, B = input().split()
 num = {chr(val+55): val for val in range(10, 36)}
 num_2 = {chr(val+48): val for val in range(10)}
 
+num.update(num_2)
 
 answer = 0
 for idx, val in enumerate(reversed(N)):
