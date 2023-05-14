@@ -7,7 +7,7 @@ num_dict.update(pure_dict)
 
 answer = ''
 
-if N > 9:
+if B > 9:
     while N >= B:
         share, remainder = divmod(N, B)
         answer += num_dict.get(remainder)
@@ -19,7 +19,10 @@ else:
         share, remainder = divmod(N, B)
         keep.append(str(remainder))
         N = share
-    answer += str(N)
-    answer.join(reversed(keep))
+    keep.append(str(remainder))
+    if share//B > 0:
+        keep.append(str(share//B))
+    keep.reverse()
+    answer = answer.join(keep)
 
 print(answer)
