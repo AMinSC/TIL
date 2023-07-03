@@ -7,7 +7,7 @@ app_name = 'blog'
 urlpatterns = [
     # path("", views.index),  # FBV
     # 글 조회
-    path("", views.List.as_view(), name='list'),
+    path("", views.Index.as_view(), name='list'),
     # 글 상세 조회
     path("detail/<int:pk>/", views.DetailView.as_view(), name='detail'),
     # 글 작성

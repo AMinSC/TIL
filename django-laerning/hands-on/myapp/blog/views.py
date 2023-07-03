@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, Comment, HashTag
 from .form import PostForm, CommentForm, HashTagForm
 from django.urls import reverse_lazy, reverse
@@ -18,23 +19,45 @@ class Index(View):
         context = {
             "posts": post_objs
         }
-        return render(request, 'blog/post_form.html', context)
+        return render(request, 'blog/post_list.html', context)
 
 
 # Django 자체의 클래스 뷰 기능도 강력, 편리
 # model, templte_name, context_object_name
 # paginate_by(보여주는 페이지 설정), form_class, form_valid(),
 # django.views.generic -> ListView
-class List(ListView):
-    model = Post  # Model
-    template_name = 'blog/post_list.html'  # temlplate
-    context_object_name = 'posts'  # 변수 값의 이름
+# class List(ListView):
+#     model = Post  # Model
+#     template_name = 'blog/post_list.html'  # temlplate
+#     context_object_name = 'posts'  # 변수 값의 이름
 
 
-class Write(CreateView):
-    model = Post  # Model
-    form_class = PostForm  # Form
-    success_url = reverse_lazy('blog:list')  # 성공시 보내줄 url
+# class Write(CreateView):
+#     model = Post  # Model
+#     form_class = PostForm  # Form
+#     success_url = reverse_lazy('blog:list')  # 성공시 보내줄 url
+
+class Write(LoginRequiredMixin, View):
+    # Mixin: LoginRequiredMixin
+    def get(self, request):
+        form = PostForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'blog/post_form.html', context)
+
+    def post(self, request):
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)  # commit=False 변수 할당만 우선 하고
+            post.writer = request.user
+            post.save()
+            return redirect('blog:list')
+        form.add_error(None, '폼이 유효하지 않습니다.')
+        context = {
+            'form': form
+        }
+        return render(request, 'blog/post_form.html')
 
 
 class Update(UpdateView):
