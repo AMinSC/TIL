@@ -22,6 +22,19 @@ class Index(View):
         return render(request, 'blog/post_list.html', context)
 
 
+'''
+class Index(LoginRequiredMixin, View):
+    def get(self, request):
+        # Post - User 연결 (Foreign key)
+        # User를 이용해서 Post를 가지고 온다.
+        posts = Post.objects.filter(writer=request.user)
+        context = {
+            'posts': posts
+        }
+        return render(request, 'blog/post_list.html', context)
+'''
+
+
 # Django 자체의 클래스 뷰 기능도 강력, 편리
 # model, templte_name, context_object_name
 # paginate_by(보여주는 페이지 설정), form_class, form_valid(),
@@ -46,13 +59,13 @@ class Write(LoginRequiredMixin, View):
         }
         return render(request, 'blog/post_form.html', context)
 
-    def post(self, request):
+    def post(self, request):  # request -> HttpRequest 객체
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)  # commit=False 변수 할당만 우선 하고
+            post = form.save(commit=False)  # commit=False 변수 할당만 우선 하고 이후에 수정가능
             post.writer = request.user
             post.save()
-            return redirect('blog:list')
+            return redirect('blog:list')  # request -> HttpRequest 객체
         form.add_error(None, '폼이 유효하지 않습니다.')
         context = {
             'form': form
@@ -79,9 +92,19 @@ class Update(UpdateView):
         return reverse('blog:detail', kwargs={ 'pk': post.pk })
 
 
-class Delete(DeleteView):
-    model = Post
-    success_url = reverse_lazy('blog:list')
+# class Delete(DeleteView):
+#     model = Post
+#     success_url = reverse_lazy('blog:list')
+
+
+class Delete(View):
+    def post(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return redirect('blog:list')
+    
+    # 클래스 자체에 아예 접근하지 못하게 -> LoginRequiredMixin
+    # Login이 되었을 때만 삭제 버튼이 보이게
 
 
 class DetailView(View):
