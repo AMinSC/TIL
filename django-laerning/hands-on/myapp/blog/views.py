@@ -92,6 +92,34 @@ class Update(UpdateView):
         return reverse('blog:detail', kwargs={ 'pk': post.pk })
 
 
+class Update(View):
+    def get(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        form = PostForm(initial={
+                            'title': post.title, 'content': post.content
+                        })
+        context = {
+            'form': form,
+            'post': post
+        }
+        return render(request, 'blog/post_edit.html', context)
+
+    def post(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post.title = form.cleaned_data('title')
+            post.content = form.cleaned_data('content')
+            post.save()
+            return redirect('blog:detail', pk=pk)
+
+        form.add_error('폼이 유효하지 않습니다.')
+        context = {
+            'form': form
+        }
+        return render(request, 'blog/form_error.html', context)
+
+
 # class Delete(DeleteView):
 #     model = Post
 #     success_url = reverse_lazy('blog:list')
@@ -149,16 +177,27 @@ class CommentWrite(View):
             content = form.cleaned_data['content']
             # 해당 아이디에 해당하는 글 불러옴
             post = Post.objects.get(pk=comment_id)
+            # 유저 정보 가져오기
+            writer = request.user
             # 댓글 객체 생성, Create 메서드를 사용할 때는 sava 필요 없음
-            comment = Comment.objects.create(post=post, content=content)
+            comment = Comment.objects.create(post=post, content=content, writer=writer)
             return redirect('blog:detail', pk=comment_id)
+        
+        form.add_error('폼이 유효하지 않습니다.')
+        context = {
+            'form': form
+        }
+        return render(request, 'blog/form_error.html', context)
 
 
-class CommentDelete(View):
+class CommentDelete(View):  # comment_id
     def post(self, request, comment_id):
+        # 지울 객체를 찾아야 한다. -> 댓글 객체
         comment = Comment.objects.get(pk=comment_id)
-        post_id = comment.post.id
+        # 상세페이지로 돌아가기
         # post_id는 객체를 삭제하기 전에 받아와야 함
+        post_id = comment.post.id
+        # 삭제
         comment.delete()
 
         return redirect('blog:detail', pk=post_id)
@@ -174,10 +213,17 @@ class HashTagWrite(View):
             name = form.cleaned_data['name']
             # 해당 아이디에 해당하는 글 불러옴
             post = Post.objects.get(pk=hashtag_id)
+            writer = request.user
             # 댓글 객체 생성, Create 메서드를 사용할 때는 sava 필요 없음
-            hashtag = HashTag.objects.create(post=post, name=name)
+            hashtag = HashTag.objects.create(post=post, name=name, writer=writer)
             return redirect('blog:detail', pk=hashtag_id)
         
+        form.add_error('폼이 유효하지 않습니다.')
+        context = {
+            'form': form
+        }
+        return render(request, 'blog/form_error.html', context)
+
 
 class HashTagDelete(View):
     def post(self, request, hashtag_id):
