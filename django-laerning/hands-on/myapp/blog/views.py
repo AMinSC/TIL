@@ -57,6 +57,8 @@ class Write(LoginRequiredMixin, View):
     # redirect_field_name = 'next'
 
     def get(self, request):
+        # next_path = request.GET.get('next')
+        # next_url = 
         form = PostForm()
         context = {
             'form': form,
@@ -193,12 +195,15 @@ class CommentWrite(View):
             comment = Comment.objects.create(post=post, content=content, writer=writer)
             return redirect('blog:detail', pk=comment_id)
         
-        form.add_error('폼이 유효하지 않습니다.')
+        form.add_error(None,'폼이 유효하지 않습니다.')
         hashtag_form = HashTagForm()
         context = {
-            'form': form,
+            'title': 'Blog',
             'post': post,
-            'title': 'Blog'
+            'comments':post.comment_set.all(),
+            'hashtags':post.hashtag_set.all(),
+            'comment_form': form,
+            'hashtag_form': hashtag_form
         }
         return render(request, 'blog/post_detail_error.html', context)
 
@@ -221,22 +226,28 @@ class CommentDelete(View):  # comment_id
 class HashTagWrite(View):
     def post(self, request, hashtag_id):
         form = HashTagForm(request.POST)
+        # 해당 아이디에 해당하는 글 불러옴
+        post = Post.objects.get(pk=hashtag_id)
+
         if form.is_valid():
             # 사용자에게 태그 내용을 받아옴
             name = form.cleaned_data['name']
-            # 해당 아이디에 해당하는 글 불러옴
-            post = Post.objects.get(pk=hashtag_id)
             writer = request.user
             # 댓글 객체 생성, Create 메서드를 사용할 때는 sava 필요 없음
             hashtag = HashTag.objects.create(post=post, name=name, writer=writer)
             return redirect('blog:detail', pk=hashtag_id)
         
-        form.add_error('폼이 유효하지 않습니다.')
+        form.add_error(None, '폼이 유효하지 않습니다.')
+        comment_form = CommentForm()
         context = {
-            'form': form,
-            'title': 'Blog'
+            'title': 'Blog',
+            'post': post,
+            'comments': post.comment_set.all(),
+            'hashtags': post.hashtag_set.all(),
+            'comment_form': comment_form,
+            'hashtag_form': form,
         }
-        return render(request, 'blog/form_error.html', context)
+        return render(request, 'blog/post_detail.html', context)
 
 
 class HashTagDelete(View):

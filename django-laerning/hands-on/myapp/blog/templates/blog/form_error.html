@@ -1,14 +1,13 @@
 <!-- form error 출력 -->
-{% comment %}
-{% if form.errors %}
-    <div class="alert alert-danger">
-        <ul>
-            {% for errors in form.errors.values %}
-                {% for error in errors %}
-                    {{ error }}
-                {% endfor %}
+
+
+<div class="alert alert-danger">
+    <ul>
+        {% for errors in form.errors.values %}
+            {% for error in errors %}
+                <li>{{ error }}</li>
             {% endfor %}
-        </ul>
-    </div>
-{% endif %}
-{% endcomment %}
+        {% endfor %}
+    </ul>
+    {{ form }}
+</div>

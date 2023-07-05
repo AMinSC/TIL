@@ -2,72 +2,81 @@
 
 {% block content %}
 
+<h2>제목 : {{ post.title }}</h2>
 
-{% include 'blog/form_error.html' %}
-
-    <h2>제목 : {{ post.title }}</h2>
-    
-    {% if post.writer == request.user %}
-    <a href="{% url 'blog:edit' pk=post.pk  %}" class="btn">수정</a>
-    <form action="{% url 'blog:delete' pk=post.pk  %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="삭제" class="btn">
-    </form>
-    {% endif %}
-    <p>내용 : {{ post.content }}</p>
-    <p>작성자 : {{ post.writer }}</p>
-    <p>작성일 : {{ post.created_at }}</p>
-    <hr>
-    <h3>해시 태그</h3>
-    <form action="{% url 'blog:tag-write' hashtag_id=post.pk %}" method="post">
-        {% csrf_token %}
+{% if post.writer == request.user %}
+<a href="{% url 'blog:edit' pk=post.pk  %}" class="btn">수정</a>
+<form action="{% url 'blog:delete' pk=post.pk  %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="삭제" class="btn">
+</form>
+{% endif %}
+<p>내용 : {{ post.content }}</p>
+<p>작성자 : {{ post.writer }}</p>
+<p>작성일 : {{ post.created_at }}</p>
+<hr>
+<h3>해시 태그</h3>
+<form action="{% url 'blog:tag-write' hashtag_id=post.pk %}" method="post">
+    {% csrf_token %}
+    {% if hashtag_form.errors %}
+        {% with form=hashtag_form %}
+            {% include 'blog/form_error.html' %}
+        {% endwith %}
+    {% else %}
         {{ hashtag_form.name }}
-        <input type="submit" name="태그 작성">
-    </form>
-    {% if hashtags %}
-    <ul>
-        {% for hashtag in hashtags %}
-            <li>
-                {{ hashtag.name }}
-                {% if hashtag.writer == request.user %}
-                    <form action="{% url 'blog:tag-delete' hashtag_id=hashtag.pk %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="태그 삭제" class="btn">
-                    </form>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>태그가 없습니다.</p>
     {% endif %}
-    <hr>
-    <!-- write -->
-    <h3>댓글</h3>
-    <form action="{% url 'blog:cm-write' comment_id=post.pk %}" method="post">
-        {% csrf_token %}
+    <input type="submit" name="태그 작성">
+</form>
+{% if hashtags %}
+<ul>
+    {% for hashtag in hashtags %}
+        <li>
+            {{ hashtag.name }}
+            {% if hashtag.writer == request.user %}
+                <form action="{% url 'blog:tag-delete' hashtag_id=hashtag.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="태그 삭제" class="btn">
+                </form>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>태그가 없습니다.</p>
+{% endif %}
+<hr>
+<!-- write -->
+<h3>댓글</h3>
+<form action="{% url 'blog:cm-write' comment_id=post.pk %}" method="post">
+    {% csrf_token %}
+    {% if comment_form.errors %}
+        {% with form=comment_form %}
+            {% include 'blog/form_error.html' %}
+        {% endwith %}
+    {% else %}
         {{ comment_form.content }}
-        <input type="submit" value="댓글 작성">
-    </form>
-    <br>
-    <!-- comments -->
-    <!-- if 값이 없을경우를 위해 -->
-    {% if comments %}
-    <ul>
-        <!-- for 모든 댓글을 조회하기 위해 -->
-        {% for comment in comments %}
-            <li>{{ comment.content }} / {{ comment.created_at }} 
-                {% if comment.writer == request.user %}
-                    <form action="{% url 'blog:cm-delete' comment_id=comment.pk %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="댓글 삭제" class="btn">
-                    </form>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <p>댓글이 없습니다.</p>
     {% endif %}
+    <input type="submit" value="댓글 작성">
+</form>
+<br>
+<!-- comments -->
+<!-- if 값이 없을경우를 위해 -->
+{% if comments %}
+<ul>
+    <!-- for 모든 댓글을 조회하기 위해 -->
+    {% for comment in comments %}
+        <li>{{ comment.content }} / {{ comment.created_at }} 
+            {% if comment.writer == request.user %}
+                <form action="{% url 'blog:cm-delete' comment_id=comment.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="댓글 삭제" class="btn">
+                </form>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>댓글이 없습니다.</p>
+{% endif %}
 
 {% endblock %}
