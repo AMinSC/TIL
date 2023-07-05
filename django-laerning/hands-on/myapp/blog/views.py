@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+# from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post, Comment, HashTag
 from .form import PostForm, CommentForm, HashTagForm
-from django.urls import reverse_lazy, reverse
+# from django.urls import reverse_lazy, reverse
 
 
 ### Post
@@ -76,28 +76,27 @@ class Write(LoginRequiredMixin, View):
         form.add_error(None, '폼이 유효하지 않습니다.')
         context = {
             'form': form,
-            'title': 'Blog'
         }
         return render(request, 'blog/post_form.html')
 
 
-class Update(UpdateView):
-    model = Post
-    template_name = 'blog/post_edit.html'
-    fields = ['title', 'content']
-    # success_url = reverse_lazy('blog:list')
+# class Update(UpdateView):
+#     model = Post
+#     template_name = 'blog/post_edit.html'
+#     fields = ['title', 'content']
+#     # success_url = reverse_lazy('blog:list')
     
-    # initial 기능 사용 -> form에 값을 미리 넣어주기 위해서
-    def get_initial(self):
-        initial = super().get_initial()  # UpdateView(generic view)에서 제공하는 initial(딕셔너리)
-        post = self.get_object()  # pk 기반으로 객체를 가져옴
-        initial['title'] = post.title
-        initial['content'] = post.content
-        return initial
+#     # initial 기능 사용 -> form에 값을 미리 넣어주기 위해서
+#     def get_initial(self):
+#         initial = super().get_initial()  # UpdateView(generic view)에서 제공하는 initial(딕셔너리)
+#         post = self.get_object()  # pk 기반으로 객체를 가져옴
+#         initial['title'] = post.title
+#         initial['content'] = post.content
+#         return initial
     
-    def get_success_url(self):  # get_absolute_url
-        post = self.get_object()  # pk 기반으로 현재 객체 가져오기
-        return reverse('blog:detail', kwargs={ 'pk': post.pk })
+#     def get_success_url(self):  # get_absolute_url
+#         post = self.get_object()  # pk 기반으로 현재 객체 가져오기
+#         return reverse('blog:detail', kwargs={ 'pk': post.pk })
 
 
 class Update(View):
@@ -107,9 +106,9 @@ class Update(View):
                             'title': post.title, 'content': post.content
                         })
         context = {
-            'form': form,
+            'title': 'Blog',
             'post': post,
-            'title': 'Blog'
+            'form': form,
         }
         return render(request, 'blog/post_edit.html', context)
 
@@ -117,15 +116,15 @@ class Update(View):
         post = Post.objects.get(pk=pk)
         form = PostForm(request.POST)
         if form.is_valid():
-            post.title = form.cleaned_data('title')
-            post.content = form.cleaned_data('content')
+            post.title = form.cleaned_data['title']
+            post.content = form.cleaned_data['content']
             post.save()
             return redirect('blog:detail', pk=pk)
 
         form.add_error('폼이 유효하지 않습니다.')
         context = {
+            'title': 'Blog',
             'form': form,
-            'title': 'Blog'
         }
         return render(request, 'blog/form_error.html', context)
 
@@ -164,12 +163,12 @@ class DetailView(View):
         hashtag_form = HashTagForm()
         
         context = {
+            'title': 'Blog',
             'post': post,
             'comments': comments,
-            'comment_form': comment_form,
             'hashtags': hashtags,
+            'comment_form': comment_form,
             'hashtag_form': hashtag_form,
-            'title': 'Blog'
         }
         
 
@@ -195,7 +194,9 @@ class CommentWrite(View):
             comment = Comment.objects.create(post=post, content=content, writer=writer)
             return redirect('blog:detail', pk=comment_id)
         
-        form.add_error(None,'폼이 유효하지 않습니다.')
+        # form.add_error(None,'폼이 유효하지 않습니다.')
+        # errors = [error for error_list in form.errors.values() for error in error_list]
+
         hashtag_form = HashTagForm()
         context = {
             'title': 'Blog',
@@ -205,7 +206,7 @@ class CommentWrite(View):
             'comment_form': form,
             'hashtag_form': hashtag_form
         }
-        return render(request, 'blog/post_detail_error.html', context)
+        return render(request, 'blog/post_detail.html', context)
 
 
 class CommentDelete(View):  # comment_id
@@ -232,13 +233,16 @@ class HashTagWrite(View):
         if form.is_valid():
             # 사용자에게 태그 내용을 받아옴
             name = form.cleaned_data['name']
+            # 작성자 정보 가져오기
             writer = request.user
             # 댓글 객체 생성, Create 메서드를 사용할 때는 sava 필요 없음
             hashtag = HashTag.objects.create(post=post, name=name, writer=writer)
+            # comment = Comment(post=post) -> comment.save()
             return redirect('blog:detail', pk=hashtag_id)
         
         form.add_error(None, '폼이 유효하지 않습니다.')
         comment_form = CommentForm()
+        
         context = {
             'title': 'Blog',
             'post': post,
