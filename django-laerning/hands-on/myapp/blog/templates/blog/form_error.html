@@ -1,4 +1,6 @@
 <!-- form error 출력 -->
+{% comment %}
+{% if form.errors %}
     <div class="alert alert-danger">
         <ul>
             {% for errors in form.errors.values %}
@@ -8,3 +10,5 @@
             {% endfor %}
         </ul>
     </div>
+{% endif %}
+{% endcomment %}

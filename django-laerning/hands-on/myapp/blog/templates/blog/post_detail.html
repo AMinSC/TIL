@@ -1,17 +1,12 @@
-{% extends 'blog/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-{% if form %}
-    {% comment %}
-        {% for errors in form.errors.values %}
-            {% for error in errors %}
-                {{ error }}
-            {% endfor %}
-        {% endfor %}
-    {% endcomment %}
-    {% include 'form_error.html' %}
-{% else %}
+
+
+{% include 'blog/form_error.html' %}
+
     <h2>제목 : {{ post.title }}</h2>
+    
     {% if post.writer == request.user %}
     <a href="{% url 'blog:edit' pk=post.pk  %}" class="btn">수정</a>
     <form action="{% url 'blog:delete' pk=post.pk  %}" method="post">
@@ -74,5 +69,5 @@
     {% else %}
         <p>댓글이 없습니다.</p>
     {% endif %}
-{% endif %}
+
 {% endblock %}

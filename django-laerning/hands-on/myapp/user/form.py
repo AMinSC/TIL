@@ -10,13 +10,15 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = UserCreationForm.Meta.fields + ('email', )
+        fields = ['email']
+        # fields = UserCreationForm.Meta.fields + ('email', )
 
 
 class LoginForm(AuthenticationForm):
 
     class Meta:
         model = User
+        fields = ['email', 'password']
         # models 에서 이미 설정을 해뒀기 때문에 아래는 주석 처리
         # fields = ['email', 'password']
         # widgets = {

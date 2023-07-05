@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <h1>블로그 게시판 화면</h1>
@@ -9,14 +9,16 @@
     <table class="table">
         <thead class="table-light">
             <tr>
-                <th>Title</th>
-                <th>Writer</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성자</th>
             </tr>
         </thead>
         <tbody>
             {% for post in posts %}
                 <tr>
                     <td><a href="{% url 'blog:detail' pk=post.pk %}" class="btn">{{ post.title }}</a></td>
+                    <td>{{ post.content }}</td>
                     <td>{{ post.writer }}</td>
                 </tr>
             {% endfor %}
