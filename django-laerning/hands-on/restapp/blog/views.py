@@ -25,7 +25,7 @@ class Write(APIView):
             post.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class Update(APIView):
     def post(self, request, pk):
@@ -82,10 +82,17 @@ class Delete(APIView):
         return Response({'message': 'Post deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
 
 
+#  아래는 학습하고 진행하기
 class DetailView(APIView):
     def get(self, request, pk):
         post = Post.objects.get(pk=pk)
-        # comments = Comment.objects.select_related('writer').filter(post=post)
-        # hashtags = HashTag.objects.select_related('writer').filter(post=post)
+        comments = Comment.objects.select_related('writer').filter(post=post)
+        hashtags = HashTag.objects.select_related('writer').filter(post=post)
         serialized = CommentSerializer(instance=post, data=request.data)
 
+
+class CommentWrite(APIView):
+    def post(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+        except 
