@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Post, Comment, HashTag
 from .serializers import PostSerializer, CommentSerializer, HashTagSerializer
+from .form import PostForm, CommentForm, HashTagForm
 
 
 ### Post
@@ -29,35 +30,18 @@ class Write(APIView):
 
 class Update(APIView):
     def post(self, request, pk):
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            post = serializer.data.get(pk=pk)
-            post.title = serializer.data['title']
-            post.content = serializer.data['content']
-            post.save()
-            return Response(serializer.data, status=status.HTTP_201_)
-        
-
-class Update(APIView):
-    def put(self, request, pk):
         try:
             # 기존 post를 가져옴
             post = Post.objects.get(pk=pk)
         except Post.DoesNotExist:
             # 해당 pk로 post가 존재하지 않을 경우
             return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        # 기존 post 객체를 사용하여 serializer 생성
-        serializer = PostSerializer(instance=post, data=request.data)
-        
         if serializer.is_valid():
-            # 데이터가 유효할 경우 저장
-            serializer.save()
+            form = PostForm(request.POST)
+            serializer = PostSerializer(data=request.data)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            # 데이터가 유효하지 않을 경우 에러 반환
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class Delete(APIView):
     def post(self, request, pk):
@@ -93,6 +77,19 @@ class DetailView(APIView):
 
 class CommentWrite(APIView):
     def post(self, request, pk):
-        try:
-            post = Post.objects.get(pk=pk)
-        except 
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            comment = serializer.save(writer=request.user)
+            comment.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class HashTagWrite(APIView):
+    def post(self, request, pk):
+        serializer = HashTagSerializer(data=request.data)
+        if serializer.is_valid():
+            hashtag = serializer.save(writer=request.user)
+            hashtag.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
