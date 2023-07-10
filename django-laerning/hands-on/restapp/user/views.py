@@ -86,11 +86,10 @@ class ProfileView(APIView):
     #     pass
 
     def post(self, request):
-        user = request.data.get('user')
         image = request.data.get('image')
         age = request.data.get('age')
 
-        profile = Profile.objects.create(user=user, image=image, age=age)
+        profile = Profile.objects.create(user=request.user, image=image, age=age)
         serializer = ProfileSerializer(profile)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)

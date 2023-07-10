@@ -22,7 +22,7 @@ class Write(APIView):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             ## 2차 수정
-            post = serializer.save(writer=request.user)
+            post = serializer.save()
             post.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
