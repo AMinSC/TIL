@@ -35,6 +35,10 @@ class Registration(View):
             user = form.save()
             # 로그인한 다음 이동
             return redirect('user:login')
+        context = {
+            'form': form
+        }
+        return render(request, 'user/user_register.html', context)
 
 
 ### Login
@@ -58,7 +62,7 @@ class Login(View):
         if form.is_valid():
             email = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(username=email, password=password) # True, False
+            user = authenticate(username=email, password=password)  # True, False
             
             if user:
                 login(request, user)
@@ -117,8 +121,5 @@ class ProfileUpdate(APIView):
 class ProfileDelete(APIView):
     def post(self, request):
         profile = Profile.objects.get(user=request.user)
-        serializer = ProfileSerializer(profile)
-
-        if serializer.is_valid():
-            profile.delete()
-            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+        profile.delete()
+        return Response({'msg': 'Profile deleted'}, status=status.HTTP_200_OK)
