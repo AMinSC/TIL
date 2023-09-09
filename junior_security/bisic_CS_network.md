@@ -93,20 +93,19 @@
 
 ### 2. **SW (Software: 소프트웨어)**
 - **Antivirus & Antimalware Software: 안티바이러스 및 안티맬웨어 소프트웨어**: 악성 소프트웨어를 감지, 예방 및 제거하는 프로그램입니다.
-- **Firewall Software: 방화면 소프트웨어**: 들어오고 나가는 네트워크 트래픽을 모니터링하고 제어합니다.
-- **Encryption Software: 암호화 소프트웨어**: 데이터를 보호하기 위해 암호화 기법을 사용하는 도구입니다.
+- **Firewall Software(방화면 소프트웨어)**: 들어오고 나가는 네트워크 트래픽을 모니터링하고 제어합니다.
+- **Encryption Software(암호화 소프트웨어)**: 데이터를 보호하기 위해 암호화 기법을 사용하는 도구입니다.
 - **IDPS (Intrusion Detection & Prevention Systems: 침입 탐지 및 예방 시스템)**: 네트워크나 시스템에서 악성 활동을 모니터링하는 소프트웨어입니다.
 
 ### 3. **OSI 7 Layer Model**
-While security can be implemented at multiple layers of the OSI model, certain layers are more commonly associated with specific security measures:
 
-- **Physical Layer**: Physical security measures like securing cables or using tamper-evident seals.
-- **Data Link Layer**: MAC address filtering and switch port security.
-- **Network Layer**: Packet filtering with the help of Access Control Lists (ACLs) on routers. IPsec can also be used here for encrypting IP packets.
-- **Transport Layer**: Security measures such as Secure Sockets Layer (SSL) and Transport Layer Security (TLS) for encrypting sessions.
-- **Session Layer**: VPN tunnels can be established at this layer to create a secure connection over a public network.
-- **Presentation Layer**: Encryption, compression, and translating data between formats can occur here, with SSL/TLS operating at both this layer and the transport layer.
-- **Application Layer**: Firewalls can filter traffic based on the application. Protocols like HTTPS (HTTP over SSL/TLS) also work at this layer.
+- **Physical Layer**: 케이블을 고정하거나 변조 방지 씰을 사용하는 등의 물리적 보안 조치를 취합니다.
+- **Data Link Layer**: MAC 주소 필터링 및 스위치 포트를 보안합니다.
+- **Network Layer**: 라우터의 ACL(Access Control Lists: 액세스 제어 목록)을 통한 패킷 필터링, IP 패킷을 암호화하기 위해 IPsec을 사용할 수도 있습니다.
+- **Transport Layer**: 세션 암호화를 위한 SSL(Secure Sockets Layer: 보안 소켓 계층) 및 TLS(Transport Layer Security: 전송 계층 보안)과 같은 보안 조치를 할 수 있습니다.
+- **Session Layer**: 이 계층에서 VPN(Virtual Private Network: 가상 사설 네트워크) 터널을 설정하여 공용 네트워크를 통한 보안 연결을 만들 수 있습니다.
+- **Presentation Layer**: 이 계층과 전송 계층 모두에서 작동하는 SSL/TLS를 통해 암호화, 압축, 형식 간 데이터 변환이 이루어질 수 있습니다.
+- **Application Layer**: 방화벽은 애플리케이션에 따라 트래픽을 필터링할 수 있습니다. HTTPS(HTTP over SSL/TLS)와 같은 프로토콜도 이 계층에서 작동합니다.
 
-It's essential to understand that security is a layered approach. The more layers at which security is implemented, the harder it is for malicious entities to penetrate or compromise a system or network. Combining HW, SW, and OSI layer-specific security measures can result in a robust and comprehensive security posture.
+> 보안은 다층적인 접근 방식이라는 점을 이해하는 것이 중요합니다. 보안이 구현되는 계층이 많을수록 악의적인 주체가 시스템이나 네트워크에 침투하거나 손상시키기가 더 어려워집니다. HW, SW, OSI 계층별 보안 조치를 결합하면 강력하고 포괄적인 보안 태세를 구축할 수 있습니다.
 
