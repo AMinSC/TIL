@@ -9,8 +9,6 @@ new_num_list = []
 for i in range(2):
     new_num_list.append(list(map(lambda x: x[i], num_list)))
 
-
-print(new_num_list)
 for i, j, k in new_num_list:
     if i == j:
         print(k, end='')
