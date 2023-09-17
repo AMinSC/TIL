@@ -200,11 +200,96 @@ for (int[] m: a) {
 
 
 ## 문자열을 저장하는 String
+참조 자료형의 가장 대표적인 형태는 `클래스(class)`입니다.
+이번에는 자바가 제공하는 클래스 중 문자열을 저장하는 String에 대해서 알아보겠습니다.
 
 ### 문자열의 표현과 객체 생성
+String 클래스의 객체 생성 방법은 크게 2가지 입니다.
+
+1. `String 참조 변수명 = new String("문자열");`
+
+2. `String 참조 변수명 = "문자열";`
+
+> 위 두 방식은 생성하는 방식은 달라도 메모리에 저장되는 방식은 동일합니다.
 
 ### String 클래스의 2가지 특징
+String 클래스도 당연히 클래스이므로 다른 클래스들의 특징을 모두 지니고 있습니다.
+하지만 자주 사용되는 클래스인 만큼 다른 클래스에는 없는 2개의 특징이 있습니다.
+
+1. 한 번 정의된 문자열은 변경할 수 없습니다.
+만일 문자열의 내용을 변경하면 JVM은 기존의 문자열을 수정하는 것이 아니라 새로운 문자열을 포함하고 있는 객체를 생성해 사용하고 기존 객체는 버립니다.
+
+```Java
+String str1 = new String("안녕");
+String str2 = str1;
+str1 = "안녕하세요";
+System.out.println(str1);   // 안녕하세요
+System.out.println(str2);   // 안녕
+```
+
+> 이는 참조 자료형에서 2개의 참조 변수가 1개의 객체를 가리킬 때 하나의 참조 변수에 접근해 객체의 값을 변경하면, 기존 값도 함께 변경되는 것과는 구분되는 특징입니다.
+
+2. 문자열 리터럴을 바로 입력해 객체를 생성할 때 같은 문자열끼리 객체를 공유합니다.
+문자열 리터럴만 입력해 String 객체를 생성하면 하나의 문자열을 여러 객체가 공유할 수 있습니다.
+이는 다른 클래스에 없는 특징으로 특정 문자열의 객체를 여러 개 만들어 사용할 때 메모리 효율성을 증가시키기 위한 것입니다.
+
+```Java
+String str1 = new String("안녕");
+String str2 = "안녕";
+String str3 = "안녕";
+String str4 = new String("안녕");
+```
+
+> new 키워드로 생성하게 되면 힙 메모리에 동일한 문자열 객체 유무 상관없이 새롭게 객체를 생성하게 되고, 문자열 리터럴로 생성할 때는 힙 메모리에 리터럴로 생성된 동일 문자열을 포함하고 있는 객체가 있으면 그 객체를 공유합니다.
+
 
 ### String 객체의 '+' 연산
++ 연산은 값을 더하는 의미와 연결하는 의미가 있고, 문자/문자열은 연결하는 의미로 사용됩니다.
+
+> 하지만 위에서 알 수 있듯이 문자열은 변경이 되지 않기 때문에 각 연산값 만큼 메모리를 차지하게 됩니다.
 
 ### String 클래스의 주요 메서드
+String 클래스는 문자열의 길이, 문자열 검색, 문자열 변환 및 연결 등 매우 풍부한 메서드를 제공합니다.
+
+| 구분                	| 리턴 타입 	| 메서드                                                                                                                                         	| 설명                                                                                                            	|
+|---------------------	|-----------	|------------------------------------------------------------------------------------------------------------------------------------------------	|-----------------------------------------------------------------------------------------------------------------	|
+| 문자열 길이         	| int       	| length()                                                                                                                                       	| 문자열의 길이                                                                                                   	|
+| 문자열 검색         	| char      	| charAt(int index)                                                                                                                              	| 인덱스 위치에서의 문자                                                                                          	|
+|                     	| int       	| indexOf(int ch) indexOf(int ch, int fromIndex) indexOf(String str) indexOf(String str, int fromIndex)                                          	| 문자열에 포함된 문자 또는 문자열의 위치를 앞에서부터 검색했을 때 일치하는 인덱스 값(fromIndex는 검색 시작 위치) 	|
+|                     	| int       	| lastIndexOf(int ch) lastIndexOf(int ch, int fromIndex) lastIndexOf(String str) lastIndexOf(String str, int fromIndex)                          	| 문자열에 포함된 문자 또는 문자열의 위치를 뒤에서부터 검색했을 때 일치하는 인덱스값(fromIndex는 검색 시작 위치)  	|
+| 문자열 변환 및 검색 	| float     	| String.valueOf(boolean b) String.valueOf(char c) String.valueOf(int i) String.valueOf(long l) String.valueOf(float f) String.valueOf(double d) 	| boolean, char,  int, long,  float, double 값을 문자열로 변환하기 위한 정적 메서드                               	|
+|                     	| double    	| concat(STring str)                                                                                                                             	| 문자열 연결(String 객체의 + 연산과 동일)                                                                        	|
+| 문자열 배열 변환    	| byte[]    	| getBytes() getBytes(Charset charset)                                                                                                           	| 문자열을 byte[]로 변환(변환할 때 문자 셋(charset)지정 가능)                                                     	|
+|                     	| char[]    	| toCharArray()                                                                                                                                  	| 문자열을 char[]로 변환                                                                                          	|
+
+가장 대표적인 것만 추렸으며 아래와 같이 간략하게 알아보겠습니다.
+- `length()`: 문자열의 길이를 리턴합니다.
+- `charAt()`: 문자열에서 특정 인덱스에 위치해 있는 문자를 알아 냅니다.
+- `indexOf()`: 문자열에서 특정 문자나 특정 문자열을 앞에서부터 찾아 위칫값을 알아냅니다.
+- `lastIndexOf()`: 문자열에서 특정 문자나 특정 문자열을 뒤에서부터 찾아 위칫값을 알아냅니다.
+- `String.valueOf()`: 기본 자료형을 문자열로 바꾸는 정적 메서드입니다.
+- `concat()`: 2개의 문자열을 연결합니다. + 연산자와 동일한 기능을 수행합니다.
+- `getBytes()`: 문자열을 byte 배열로 변환합니다. 자바 입출력 과정에서 주로 사용합니다.
+- `toCharArray()`: 문자열을 char 배열로 변환합니다. 자바 입출력 과정에서 주로 사용합니다.
+
+
+| 구분             	| 리턴 타입 	| 메서드                                                            	| 설명                                                                                                                           	|
+|------------------	|-----------	|-------------------------------------------------------------------	|--------------------------------------------------------------------------------------------------------------------------------	|
+| 문자열 수정      	| String    	| toLowerCase()                                                     	| 영문 문자를 모두 소문자로 변환                                                                                                 	|
+|                  	| String    	| toUpperCase()                                                     	| 영문 문자를 모두 대문자로 변환                                                                                                 	|
+|                  	| String    	| replace()char oldChar, char newChar)                              	| oldChar 문자열을 newChar 문자열로 대체한 문자열 생성                                                                           	|
+|                  	| String    	| substring(int beginIndex) substring(int beginIndex, int endIndex) 	| beginIndex부터 끝까지의 문자열 생성 BeginIndex부터 endIndex - 1 위치까지의 문자열 생성                                         	|
+|                  	| String[]  	| split(String regex) split(String regex, int limit)                	| regex를 기준으로 문자열을 분할한 문자열 배열을 생성(regex 구분 기호는 ‘\|’ 기호로 여러 개 사용 가능, limit는 분할의 최대 개수) 	|
+|                  	| String    	| trim()                                                            	| 문자열의 앞뒤 공백 제거                                                                                                        	|
+| 문자열 내용 비교 	| boolean   	| equals()                                                          	| 문자열의 실제 내용 비교 (==는 메모리 번지(stack) 비교)                                                                         	|
+|                  	| boolean   	| equalsIgnoreCase(String anotherString)                            	| 대소문자 구분 없이 문자열의 실제 내용 비교                                                                                     	|
+
+위 표도 간략하게 설명하면 아래와 같습니다.
+- toLowerCase(): 영문 문자를 모두 소문자로 변환합니다.
+- toUpperCase(): 영문 문자를 모두 대문자로 변환합니다.
+- replace(): 일부 문자열을 다른 문자열로 대체합니다.
+- substring(): 문자열의 일부만을 포함하는 새로운 문자열 객체를 생성합니다.
+- split(): 특정 기호를 기준으로 문자열을 분리합니다.
+- trim(): 문자열의 좌우 공백을 제거합니다.
+- equals(): 두 문자열의 위치값이 아닌 실제 데이터값을 비교합니다. 이 떄 대소문자를 구분합니다.
+- equalsIgnoreCase(): 두 문자열의 위칫값이 아닌 실제 데이터값을 비교합니다. 이 때 대소문자를 구분하지 않습니다.
