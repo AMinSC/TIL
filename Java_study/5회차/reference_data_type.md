@@ -289,11 +289,28 @@ String 클래스는 문자열의 길이, 문자열 검색, 문자열 변환 및 
 |                  	| boolean   	| equalsIgnoreCase(String anotherString)                            	| 대소문자 구분 없이 문자열의 실제 내용 비교                                                                                     	|
 
 위 표도 간략하게 설명하면 아래와 같습니다.
-- toLowerCase(): 영문 문자를 모두 소문자로 변환합니다.
-- toUpperCase(): 영문 문자를 모두 대문자로 변환합니다.
-- replace(): 일부 문자열을 다른 문자열로 대체합니다.
-- substring(): 문자열의 일부만을 포함하는 새로운 문자열 객체를 생성합니다.
-- split(): 특정 기호를 기준으로 문자열을 분리합니다.
-- trim(): 문자열의 좌우 공백을 제거합니다.
-- equals(): 두 문자열의 위치값이 아닌 실제 데이터값을 비교합니다. 이 떄 대소문자를 구분합니다.
-- equalsIgnoreCase(): 두 문자열의 위칫값이 아닌 실제 데이터값을 비교합니다. 이 때 대소문자를 구분하지 않습니다.
+- `toLowerCase()`: 영문 문자를 모두 소문자로 변환합니다.
+- `toUpperCase()`: 영문 문자를 모두 대문자로 변환합니다.
+- `replace()`: 일부 문자열을 다른 문자열로 대체합니다.
+- `substring()`: 문자열의 일부만을 포함하는 새로운 문자열 객체를 생성합니다.
+- `split()`: 특정 기호를 기준으로 문자열을 분리합니다.
+- `trim()`: 문자열의 좌우 공백을 제거합니다.
+- `equals()`: 두 문자열의 위치값이 아닌 실제 데이터값을 비교합니다. 이 떄 대소문자를 구분합니다.
+- `equalsIgnoreCase()`: 두 문자열의 위칫값이 아닌 실제 데이터값을 비교합니다. 이 때 대소문자를 구분하지 않습니다.
+
+
+```Java
+package string MethodOfString;
+
+public class MethodOfString {
+    public static void main(String[] args) {
+        String str1 = new String("Java");
+        String str2 = new String("Java");
+        String str3 = new String("java");
+
+        System.out.println(str1.equals(str2));               // true
+        System.out.println(str2.equals(str3));               // false
+        System.out.println(str2.equalsIgnoreCase(str3));     // true
+    }
+}
+```
