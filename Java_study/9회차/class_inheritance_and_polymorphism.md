@@ -487,7 +487,6 @@ Object 클래스의 대표적인 메서드는 아래와 같습니다.
 
 
 - `toString() - 객체 정보를 문자열로 출력`
-
 Object 클래스의 toString() 메서드는 객체 정보를 문자열로 리턴하는 메서드입니다.
 여기서 객체 정보는 `패키지명.클래스명@해시코드`로 나타납니다.
 
@@ -522,3 +521,116 @@ class B {
 
 
 - `equals(Object obj) - 스택 메모리의 값 비교`
+equals(Object obj)는 입력매개변수로 넘어온 객체와 자기 객체의 스택 메모리 변수값을 비교해 그 결과를 true 또는 false로 리턴하는 메서드입니다.
+기본 자료형이 아닌 객체의 스택 메모리값을 비교하므로 실제 데이터의 값이 아닌 실제 데이터의 위치(번지)를 비교하는 것입니다.
+즉, 등가 비교 연산(==)과 완벽하게 동일한 기능을 수행합니다.
+
+만일 실제 내용을 비교하고자 할 때는 equals() 메서드를 오버라이딩해서 사용해야합니다.
+
+```java
+class B {
+    String name;
+    B(String name) {
+        this.name = name;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof B) {
+            if (this.name == ((B) obj).name)
+                return true;
+        }
+    }
+}
+
+B bb1 = new B("안녕");
+B bb2 = new B("안녕");
+
+System.out.println(bb1 == bb2);         // false
+System.out.println(bb1.equals(bb2));    // true
+```
+
+- `hashCode() - 객체의 위치와 연관된 값`
+hashCode() 메서드는 객체의 위치와 관련된 값으로, 실제 위치를 나타내는 값은 아니고 객체의 위칫값을 기준으로 생성된 고윳값 정도로 생각하는 것이 적절합니다.
+
+Hashtable, HashMap 등에서 동등 비교를 하고자 할 때는 앞선 equals() 메서드와 같이 hashCode() 메서드까지 오버라이딩해야 합니다.
+
+HashMap 자료 구조는 데이터를 (Key, value)의 쌍으로 저장하며, Key값은 중복되지 않습니다.
+
+따라서 첫 번째로 비교하고자 하는 두 객체의 hashCode() 값을 비교하고, 동일하다면 equals() 메서드를 호출하여 동일하다면 같은 객체로 인식합니다.
+
+> hashMap에서 Key와 value의 타입으로는 기본 자료형이 올 수 없습니다.
+따라서 int 대신, int를 클래스 타입으로 포장한 클래스(Wrap-per Class)로 interger를 사용합니다.
+
+```java
+class A {
+    String name;
+    A(String name) {
+        this.name = name;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof A) {
+            if (this.name == ((A) obj).name)
+                return true;
+        }
+        return false;
+    }
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+
+class B {
+    String name;
+    B(String name) {
+        this.name = name;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof A) {
+            if (this.name == ((A) obj).name)
+                return true;
+        }
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+```
+
+위 코드는 A 클래스는 equals() 메서드만 오버라이딩 했고, B 클래스는 equals() 메서드와 hashCode() 메서드를 오버라이딩 했습니다.
+
+```java
+HashMap<Integer, String> hm1 = new hashMap<>();
+hm1.put(1, "데이터1");
+hm1.put(1, "데이터2");
+hm1.put(2, "데이터3");
+System.out.println(hm1);        // {1=데이터2, 2=데이터3}
+
+
+HashMap<A, String> hm2 = new HashMap<>();
+hm2.put(new A("첫 번째"), "데이터1");
+hm2.put(new A("첫 번째"), "데이터2");
+hm2.put(new A("두 번째"), "데이터3");
+System.out.println(hm2);        // {첫 번째=데이터2, 두 번째=데이터3, 첫 번째=데이터1}
+
+
+HashMap<B, String> hm3 = new HashMap<>();
+hm3.put(new B("첫 번째"), "데이터1");
+hm3.put(new B("첫 번째"), "데이터2");
+hm3.put(new B("두 번째"), "데이터3");
+System.out.println(hm3);        // {첫 번째=데이터2, 두 번째=데이터3}
+```
+
+두 번째 생성 객체를 살펴보면 이전에 위에서 A 클래스에서는 equals() 메서드만 오버라이딩 하고, hashCode()는 오버라이딩 하지 않은 코드이기 때문에, new 키워드로 서로 다른 객체가 생성되어 중복되지 않고 값이 3개 모두 들어간 것을 확인할 수 있습니다.
+
+반면 B 클래스의 경우 hashCode() 메서드를 오버라이딩할 때 `name`값을 기준으로 hashCode()가 생성이 되었고, 이는 같은 문자열이기 때문에 같은 hashCode()로 인하여 Key 중복이 제거된 것을 확인할 수 있습니다.
+
+`Object의 hashCode() 메서드는 객체의 위치에 따른 고윳값을 리턴하고, Hash*** 형태의 자료 구조에서는 동등 비교를 위해 hashCode() 결괏값을 비교하므로 필요할 때마다 equals() 메서드와 함께 추가로 오버라이딩해야 한다는것을 기억해야 합니다.`
