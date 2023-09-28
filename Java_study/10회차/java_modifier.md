@@ -43,7 +43,7 @@ A2 클래스에서는 선언과 값의 대입을 분리하였습니다.  다만,
 - 필드나 지역 변수가 final로 선언되었을 때 메모리에서 일어나는 상황을 알아보겠습니다.
 
 
-![Alt text](asset/image.png)
+![Alt text](asset/modifier_final.png)
 
 - 필드는 멤버이므로 final 필드이든, 아니든 객체 속에 포함됩니다.
 
