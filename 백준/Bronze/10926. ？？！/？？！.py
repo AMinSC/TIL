@@ -1,3 +1,3 @@
-string = input()
+s = input()
 
-print(string + "??!")
+print(s + "??!")
