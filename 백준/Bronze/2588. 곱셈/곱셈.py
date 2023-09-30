@@ -1,9 +1,7 @@
-a = int(input())
-b = input()
-c = 0
+A = input('')
+B = input('')
 
-for i, j in zip([1, 10, 100], b[::-1]):
-    j = int(j)
-    c += (j * i)
-    print(a * j)
-print(a * c)
+print(int(A) * int(B[2]))
+print(int(A) * int(B[1]))
+print(int(A) * int(B[0]))
+print(int(A) * int(B))
