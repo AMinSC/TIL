@@ -1,7 +1,5 @@
 # 예외 처리
 
-# 예외 처리
-
 ## 예외
 개발자가 프로그램을 작성하는 과정에서 실수를 하거나 사용자가 잘못된 값을 입력하면 오류가 발생할 수 있습니다.
 
@@ -30,7 +28,7 @@ int a = 1 / 0 은 분모는 절대 0이 될 수 없어 연산 자체가 불가�
 ### 예외 클래스의 상속 구조
 Throwable 클래스를 상속받은 Exception 클래스는 다시 `일반 예외(checked exception)` 클래스와 `실행 예외(unchecked(tuntime) exception)` 클래스로 나뉩니다.
 
-![Exception_class](image.png)
+![Exception_class](asset/Exception_class.png)
 
 - `일반 예외(Checked Exception)`: 컴파일 전에 체크
 Exception 클래스에서 직접 상속받은 예외 클래스들이 처리하는 일반 예외는 컴파일 전에 예외 발생 문법을 검사(check)하며, 예외 처리를 하지 않으면 문법 오류가 발생합니다.
