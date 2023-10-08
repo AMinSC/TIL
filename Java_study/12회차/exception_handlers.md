@@ -321,9 +321,244 @@ JVM의 예외 처리 방식은 매우 간단명료합니다.
 ```
 
 ## 사용자 정의 예외 클래스
+앞에서 살펴본 것처럼 자바는 다양한 형태의 일반 예외 클래스와 실행 예외 클래스를 제공합니다.
+하지만 자바가 모든 예외 클래스를 제공하는 것은 불가능합니다.
+
+예를 들어 int age = -1을 실행하면 나이는 음수가 될 수 없기 때문에 예외를 발생시켜야 하지만, 해당하는 예외 클래스는 자바에 존재하지 않습니다.
+
+이때의 유일한 해결 방법은 예외 클래스를 직접 정의해 사용하는 것입니다.
+사용자 정의 예외 클래스를 직접 작성하고 동작시켜 보면 이전에 다뤘던 자바에서 제공하는 다른 예외 클래스들의 동작 메커니즘도 자연스럽게 이해할 수 있을 것입니다.
+
 
 ### 사용자 정의 예외 클래스 생성 방법
+사용자 예외 클래스를 정의해 사용하는 과정은 크게 3단계로 이뤄져 있습니다.
+첫 번째로 예외 클래스를 사용자가 직접 정의하고, 두 번째로 작성한 예외 클래스를 이용해 객체를 생성합니다.
+마지막으로 세 번째는 고려하는 예외 상황에서 예외 객체를 `던집니다(throw).`
+
+- 사용자 정의 예외 클래스 작성
+사용자 예외 클래스를 정의하는 방법은 자바에서 제공하는 예외 클래스와 마찬가지로 Exception을 바로 상속해 일반 예외 클래스로 만드는 방법과 RuntimeException을 상속해 실행 예외 클래스로 만드는 방법으로 나눌 수 있습니다.
+
+사용자가 정의하는 예외라도 자바에서 제공하는 예외와 기본적인 특징은 같습니다.
+사용자 클래스를 정의하는 과정에서 다음과 같이 기본 생성자와 문자열을 입력받는 생성자를 추가합니다.
+두 번째 생성자는 예외 메시지를 전달받아 예외 클래스를 생성하는 생성자로, 내부에서는 부모 클래스인 Exception 또는 RuntimeException 클래스의 생성자를 호출해 사용합니다.
+
+```java
+// 1. 사용자 정의 예외 클래스
+// 일반 예외
+class MyException extends Exception {
+    MyException() {
+
+    }
+    MyException(String s) {
+        super(s);   // 부모 생성자 호출
+    }
+}
+
+// 실행 예외
+class MyRTException extends RuntimeException {
+    MyRTException() {
+
+    }
+    MyRTException(String s) {
+        super(s);   // 부모 생성자 호출
+    }
+}
+```
+
+- 사용자 정의 예외 객체 생성
+이제 앞에서 정의한 예외 클래스로 예외 객체를 생성한다.
+객체를 생성하는 밥법은 일반 예외든, 실행 예외든 상관없이 일반 클래스로 객체를 생성하는 방법과 동일합니다.
+
+```java
+// 2. 사용자 정의 예외 클래스 객체 생성
+// 일반 예외 객체
+MyException me1 = new MyException();
+MyException me2 = new MyException("예외 메시지");
+
+// 실행 예외 객체
+MyRTException mre1 = new MyRTException();
+MyRTException mre2 = new MyRTException("예외 메시지");
+```
+
+- 예외 상황에서 예외 객체 던지기
+예외 상황이 발생하면 생성한 객체를 던집니다(throw). `예외 객체를 '던진다'는 것은 '실제 JVM에게 예외 객체를 만들어 전달한다`는 의미입니다.
+예외 객체를 던지면 곧바로 예외가 발생합니다.
+그러면 자바 가상 머신은 그 예외를 처리할 수 있는 catch () {} 블록에게 받았던 예외 객체를 전달할 것입니다.
+예외 객체를 전달할 때는 `throw 예외 객체`의 형식을 사용합니다. 이때 사용하는 throw 키워드는 예외 객체를 던지는 기능을 수행하는 것으로, 예외를 전가하는 throws와 혼동하면 안 됩니다.
+
+```java
+// 3. 예외 상황에서 예외 객체 던지기
+// 일반 예외 객체 던지기
+throw me1;
+throw me2;
+throw new MyException();
+throw new MyException("예외 메시지");
+
+// 실행 예외 객체 던지기
+throw mre1;
+throw mre2;
+throw new MyRTException();
+throw new MyRTException("예외 메시지");
+```
+
+예외 객체를 throw 키워드로 던졌을 때 내부적으로 이뤄지는 처리 과정을 좀 더 자세하게 알아보겠습니다.
+
+던져진 예외 객체는 JVM으로 전달되고, JVM은 해당 예외 객체를 처리할 catch () {} 블록을 찾습니다. 따라서 throw 이후에 예외를 직접 처리하거나 예외를 전가하는 구문을 반드시 작성해야 합니다.
+해당 메서드가 직접 예외를 처리할 때는 JVM이 전달받은 예외 객체를 해당 메서드 내의 예외 처리 블록으로 전달할 것이고, 예외를 전가했을 때는 예외 객체를 상위 메서드 내의 예외 처리 블록으로 전달할 것입니다.
+
+```java
+// 방법 1: 예외를 해당 메서드 안에서 직접 처리
+void abc(int age) {
+    try {
+        if (age >= 0)
+            System.out.println("정상값");
+        else
+            throw new MyException();
+    } catch (MyException e) {
+        System.out.println("예외 처리");
+    }
+}
+void bcd() {
+    abc(-2);
+}
+
+// 방법 2: 예외를 상위 메서드로 전가해 예외 처리
+void abc(int age) throws MyException {
+    if (age >= 0)
+        System.out.println("정상값");
+    else
+        throw new MyException();
+}
+void bcd() {
+    try {
+        abc(-2);
+    } catch (MyException e) {
+        System.out.println("예외 처리");
+    }
+}
+```
+
 
 ### 예외 클래스의 메서드
+사용자 정의 예외 클래스는 Exception 또는 RuntimeException 클래스를 상속한다고 했습니다.
+따라서 추가 메서드를 정의하지 않아도 부모 클래스의 메서드를 고스란히 내려받았을 것입니다.
+여기서는 그중 getMessage()와 printStackTrack() 메서드만 알아보겠습니다.
+
+> 엄밀히 말하면 두 메서드는 Exception 클래스의 부모 클래스인 Throwable 클래스의 메서드입니다.
+즉, 모든 Exception 클래스와 Error 클래스 내에서 사용할 수 있는 메서드라는 뜻입니다.
+
+- getMessage() 메서드
+getMessage()는 예외가 발생했을 때 생성자로 넘긴 메시지를 문자열 형태로 리턴하는 메서드입니다.
+
+```java
+// 원형
+public String getMessage()
+
+// 예외 객체를 생성했을 때 메시지를 전달하지 않았을 경우
+try {
+    throw new Exception();
+} catch (Exception e) {
+    System.out.println(e.getMessage());     // null
+}
+
+// 예외 객체를 생성했을 때 메시지를 전달했을 경우
+try {
+    throw new Exception("예외 메시지");
+} catch (Exception e) {
+    System.out.println(e.getMessage());     // 예외 메시지
+}
+```
+
+- printStackTrace() 메서드
+printStackTrace()는 예외 발생이 전달되는 경로, 즉 예외가 전가된 과정을 한눈에 확인할 수 있는 메서드입니다.
+
+```java
+// 원형
+public void printStackTrace()
+
+// 예시 클래스
+class A {
+    void abc() throws NumberFormatException {
+        bcd();
+    }
+    void bcd() throws NumberFormatException {
+        cde();
+    }
+    void cde() throws NumberFormatException {
+        int num = Integer.parseInt("10A");
+    }
+}
+
+public static void main(String[] args) {
+    // 객체 생성
+    A a = new A();
+
+    // 메서드 호출 + 예외 처리
+    try {
+        a.abc();
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+`Integer.parseInt() -> cde() -> bcd() -> abc() -> main()` 순으로 출력됩니다.
+
 
 ### 사용자 정의 예외 클래스의 사용 예
+이제 실제 사용자 정의 예외 클래스의 적용 예를 살펴보겠습니다.
+
+점수를 저장하는 score 변수에는 정수 0부터 100까지만 대입할 수 있으며, 이외의 값(음수 또는 100 이상의 값)을 대입했을 때는 일반 예외를 발생시키려고 합니다.
+
+```java
+// 정수가 음수일 때 발생시킬 예외 클래스
+class MinusException extends Exception {
+    MinusException() {
+
+    }
+    MinusException(String s) {
+        super(s);
+    }
+}
+
+// 점수가 100을 초과할 때 발생시킬 예외 클래스
+class OverException extends Exception {
+    OverException() {
+
+    }
+    OverException(String s) {
+        super(s);
+    }
+}
+
+
+// 점수가 0 ~ 100 범위가 아닐 때는 예외를 발생하는 checkScore() 메서드를 갖는 클래스 A
+class A {
+    void checkScore(int score) throws MinusException, OverException {
+        if (score < 0) {
+            throw new MinusException("예외 발생: 음수값 입력");
+        } else if (score > 100) {
+            throw new OverException("예외 발생: 100점 초과");
+        } else {
+            System.out.println("정산적인 값입니다.");
+        }
+    }
+}
+```
+
+내부에서 두 종류의 예외를 생성해 던지고 있으므로 다중 예외 처리 구문이 필요하겠지만, 위 예제에서는 두 예외를 모두 상위 메서드로 전가했습니다.
+
+```java
+// A 객체의 checkScore() 메서드 호출로 발생하는 예외에 대한 예외 처리
+public static void main(String[] args) {
+    A a = new A();
+    try {
+        a.checkScore(85);       // 정상적인 값입니다.
+        a.checkScore(150);      // 예외 발생: 100점 초과
+    } catch (MinusException | OverException e) {
+        System.out.println(e.getMessage());
+    }
+}
+```
+
+
