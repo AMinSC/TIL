@@ -1,14 +1,8 @@
 a, b, c = map(int, input().split())
 
-dice = a, b, c
-
-if a == b and b == c:
-    print(10000+a*1000)
-elif a == b and b != c:
-    print(1000 + a *100)
-elif a == c and a != b:
-    print(1000 + a * 100)
-elif b == c and a != b:
-    print(1000 + b * 100)
+if a == b == c:
+    print(10000 + a * 1000)
+elif a == b or a == c or b == c:
+    print(1000 + max(a, b, c, key=lambda x: (a, b, c).count(x)) * 100)
 else:
-    print(max(dice)*100)
+    print(max(a, b, c) * 100)
