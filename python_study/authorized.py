@@ -24,7 +24,7 @@ class Authorized:
 			self.value = value
 
 	def __dir__(self, data: dict[str, str]):
-		return self.data[key]
+		return data[self.key]
 	
 	# mypy(error)issue [https://github.com/python/mypy/issues/7778]
 	def is_id_check(data: Dict[str, str]) -> str:
