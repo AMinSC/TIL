@@ -56,8 +56,8 @@ def baseball():
     computer_select = random.sample(range(1, 10), 3)
 
     while PLAY:
-        user = user_input("baseball_number")
-        if game_play(user, computer_select):
+        user_select = user_input("baseball_number")
+        if game_play(user_select, computer_select):
 
             print("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.")
             user_answer = user_input("play_option")
