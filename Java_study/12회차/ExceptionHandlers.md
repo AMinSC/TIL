@@ -26,14 +26,14 @@ int a = 1 / 0 은 분모는 절대 0이 될 수 없어 연산 자체가 불가�
 
 
 ### 예외 클래스의 상속 구조
-Throwable 클래스를 상속받은 Exception 클래스는 다시 `일반 예외(checked exception)` 클래스와 `실행 예외(unchecked(tuntime) exception)` 클래스로 나뉩니다.
+Throwable 클래스를 상속받은 Exception 클래스는 다시 `일반 예외(checked exception)` 클래스와 `실행 예외(unchecked(runtime) exception)` 클래스로 나뉩니다.
 
 ![Exception_class](asset/Exception_class.png)
 
-- `일반 예외(Checked Exception)`: 컴파일 전에 체크
+- `일반 예외(Checked Exception)`: `컴파일 전에 체크` : 
 Exception 클래스에서 직접 상속받은 예외 클래스들이 처리하는 일반 예외는 컴파일 전에 예외 발생 문법을 검사(check)하며, 예외 처리를 하지 않으면 문법 오류가 발생합니다.
 
-- `실행 예외(Unchecked Exception=Runtime Exception)`: 실행할 때 체크
+- `실행 예외(Unchecked Exception=Runtime Exception)`: `실행할 때 체크` : 
 반면 RuntimeException 클래스를 상속받은 예외 클래스들이 처리하는 실행 예외는 컴파일전이 아니라 실행할 때 발생하는 예외로, 예외 처리를 따로 하지 않더라도 문법 오류가 발생하지 않습니다.
 다만, 프로그램 실행 시 프로그램이 강제 종료되는 이유는 대부분 실행 예외 때문이므로 이에 대한 세심한 주의가 필요합니다.
 
@@ -42,27 +42,27 @@ Exception 클래스에서 직접 상속받은 예외 클래스들이 처리하�
 앞에서 설명한 것처럼 일반 예외는 예외 처리를 하지 않으면 문법 오류를 발생시켜 컴파일 자체가 불가능합니다.
 이러한 일반 예외를 처리하는 일반 예외 클래스에 대해 알아보겠습니다.
 
-- InterruptedException
+- InterruptedException : 
 Thread.sleep(시간) 메서드는 일정 시간 동안 해당 쓰레드를 일시정지 상태로 만드는 Thread 클래스의 정적 메서드입니다.
 이 메서드는 일반 예외가 발생할 수 있기 때문에 반드시 예외 처리를 해야 합니다.
 
 > 쓰레드는 프로그램 실행 과정에서 CPU를 사용하는 최소 단위로, 프로세스 내에 존재합니다.
 
-- ClassNotFoundException
+- ClassNotFoundException : 
 Class.forName("패키지명.클래스명")은 클래스를 동적으로 메모리에 로딩하는 메서드로, 해당 클래스의 정보를 담고 있는 Class 타입의 객체를 리턴합니다.
 만일 클래스를 메모리에 동적으로 로딩하는 과정에서 해당 클래스가 존재하지 않을 때는 ClassNotFoundException이 발생하므로 이에 대한 예외 처리르 반드시 해줘야 합니다.
 
 > 실제 java.lang.Object 클래스가 존재한다 하더라도 예외 처리를 하지 않으면 문법 오류가 발생합니다.
 즉, 실제 클래스의 존재 유무와 상관없이 예외가 발생할 수 있는 코드인지가 중요합니다.
 
-- IOException
+- IOException : 
 IOException은 자바 입출력 부분에서 자주 보게 될 일반 예외로, 콘솔이나 파일에 데이터를 쓰거나(write()) 읽을(read()) 때 발생하며, 반드시 IOException에 대한 예외 처리를 해야 합니다.
 
-- FileNotFoundException
-파일을 읽을 때 해당 결로에 파일이 없으면 FileNotFoundException이 발생합니다.
+- FileNotFoundException : 
+파일을 읽을 때 해당 경로에 파일이 없으면 FileNotFoundException이 발생합니다.
 이 또한 실제 파일의 존재 유무와는 상관없이 파일이 존재하지 않을 가능성이 있는 코드이기 때문에 반드시 예외 처리를 해야 문법 오류가 발생하지 않습니다.
 
-- CloneNotSupportedException
+- CloneNotSupportedException : 
 자바의 모든 클래스는 Obejct 클래스를 상속합니다.
 즉, 이는 Obejct의 모든 메서드를 사용할 수 있다는 뜻입니다.
 Object 클래스의 메서드 중 clone()은 자신의 객체를 복사한 클론객체를 생성해 리턴하는 메서드입니다.
@@ -72,7 +72,7 @@ Object 클래스의 메서드 중 clone()은 자신의 객체를 복사한 클�
 
 참고로 아래 예제에서 class B의 내부에 추가 기능이 없는데도 Obejct 클래스의 clone() 메서드를 오버라이딩 한 이유는 protected의 접근 지정자를 갖는 clone() 메서드를 클래스 A 내부에서 호출할 수 있도록 하기 위해서입니다.
 
-> CLoneable은 내부에 추상 메서드를 포함하고 있지 않으며, 단순히 해당 클래스가 복사 기능을 제공함을 나타내는 `마커(marker)`의 기능만을 수행하는 인터페이스입니다.
+> Cloneable은 내부에 추상 메서드를 포함하고 있지 않으며, 단순히 해당 클래스가 복사 기능을 제공함을 나타내는 `마커(marker)`의 기능만을 수행하는 인터페이스입니다.
 
 ```java
 class B {
@@ -96,22 +96,22 @@ public class A {
 
 실행 예외를 처리하는 클래스는 Exception의 자식 클래스인 Runtime Exception 클래스의 자식 클래스들입니다.
 
-- ArithmeticException
+- ArithmeticException : 
 Arithmetic의 사전적인 뜻은 `산술` 또는 `연산`입니다.
 즉, ArithmeticException은 연산 자체가 불가능할 때 발생하는 실행 예외입니다.
 수학식에서 절대 존재할 수 없는 대표적인 연산은 분모가 0일 때입니다.
 이 연산을 수행하도록 하면 예외가 발생하고, 이때 예외 처리를 하지 않으면 예외가 발생했을 때 실행 중인 프로그램은 예외 발생 상황을 출력하고 강제 종료됩니다.
 
-- ClassCastException
+- ClassCastException : 
 상속 관계에 있는 클래스 간의 업캐스팅은 항상 가능하지만, 다운캐스팅은 가능할 수도, 불가능할 수도 있습니다.
 ClassCastException은 다운캐스팅이 불가능한 상황에서 다운캐스팅을 시도할 때 발생합니다.
 
-- ArrayIndexOutOfBoundsException
+- ArrayIndexOutOfBoundsException : 
 ArrayIndexOutOfBoundsException은 이름에서 유추할 수 있는 것처럼 배열의 인덱스를 잘못 사용했을 때 발생합니다.
 배열의 인덱스는 항상 0 ~ (배열의 길이 - 1)까지의 값만 사용할 수 있습니다.
 만일 이 범위를 벗어나게 인덱스를 사용하면 예외가 발생합니다.
 
-- NumberFormatException
+- NumberFormatException : 
 문자열을 정수값으로 변환하고자 할 때는 `Integer.parseInt("문자열")`, 실수값으로 변환하고자 할 때는 `Double.parseDouble("문자열")`을 사용해야 합니다.
 이렇게 문자열을 숫자 또는 실수로 변환할 때 문자열이 변환하고자 하는 숫자 형식이 아니면 변환이 실패하는데, 이때 발생하는 예외입니다.
 
@@ -129,7 +129,7 @@ Boolean.parseBoolean("");           // false
 불리언값으로 변환하고자 하는 문자열이 "true"일 때만 `true` 값으로 변환되고, 이외의 모든 문자열, 심지어 비어 있는 문자열도 `false`값으로 변환합니다.
 
 
-- NullPointException
+- NullPointException : 
 참조 변수가 실제 객체를 가리키고 있지 않은 상황에서 필드나 메서드를 호출할 때 발생합니다.
 여기서 null은 위칫값을 저장하는 참조 변수의 초깃값으로만 사용할 수 있으며, 현재 가리키고(pointing)있는 객체가 없다는 것을 의미합니다.
 객체를 가리키고 있지도 않는데 해당 위치에 가서 객체 안에 있는 멤버를 실행하라고 명령하니 수행할 수 없는 것입니다.
@@ -335,7 +335,7 @@ JVM의 예외 처리 방식은 매우 간단명료합니다.
 첫 번째로 예외 클래스를 사용자가 직접 정의하고, 두 번째로 작성한 예외 클래스를 이용해 객체를 생성합니다.
 마지막으로 세 번째는 고려하는 예외 상황에서 예외 객체를 `던집니다(throw).`
 
-- 사용자 정의 예외 클래스 작성
+- 사용자 정의 예외 클래스 작성 : 
 사용자 예외 클래스를 정의하는 방법은 자바에서 제공하는 예외 클래스와 마찬가지로 Exception을 바로 상속해 일반 예외 클래스로 만드는 방법과 RuntimeException을 상속해 실행 예외 클래스로 만드는 방법으로 나눌 수 있습니다.
 
 사용자가 정의하는 예외라도 자바에서 제공하는 예외와 기본적인 특징은 같습니다.
@@ -365,7 +365,7 @@ class MyRTException extends RuntimeException {
 }
 ```
 
-- 사용자 정의 예외 객체 생성
+- 사용자 정의 예외 객체 생성 : 
 이제 앞에서 정의한 예외 클래스로 예외 객체를 생성한다.
 객체를 생성하는 밥법은 일반 예외든, 실행 예외든 상관없이 일반 클래스로 객체를 생성하는 방법과 동일합니다.
 
@@ -380,7 +380,7 @@ MyRTException mre1 = new MyRTException();
 MyRTException mre2 = new MyRTException("예외 메시지");
 ```
 
-- 예외 상황에서 예외 객체 던지기
+- 예외 상황에서 예외 객체 던지기 : 
 예외 상황이 발생하면 생성한 객체를 던집니다(throw). `예외 객체를 '던진다'는 것은 '실제 JVM에게 예외 객체를 만들어 전달한다`는 의미입니다.
 예외 객체를 던지면 곧바로 예외가 발생합니다.
 그러면 자바 가상 머신은 그 예외를 처리할 수 있는 catch () {} 블록에게 받았던 예외 객체를 전달할 것입니다.
