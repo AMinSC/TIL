@@ -127,7 +127,7 @@ public class Test {
 
 - `패키지 선언부(package daclaration)` : 주석을 제외한 첫 줄에 반드시 선언되어야 합니다.  다만, default package를 사용할 때는 생략합니다.
 
-- `클래스 선언부(class declaration)` : `publick`은 선언한 클래스를 다른 곳에서도 사용 가능하다는 의미로 자세한 내용은 다음에 알아보겠습니다.
+- `클래스 선언부(class declaration)` : `public`은 선언한 클래스를 다른 곳에서도 사용 가능하다는 의미로 자세한 내용은 다음에 알아보겠습니다.
 
 > 나중에 자세히 다루겠지만, 내부 구성 요소는 `필드(field)`, `메서드(method)`, `생성자(constructor)`, `이너 클래스(inner class)`입니다.
 

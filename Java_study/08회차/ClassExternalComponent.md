@@ -59,7 +59,7 @@ public class PackageTest2 {
 
 1. 클래스의 풀네임 사용
 클래스의 풀네임은 `패키지명.클래스명`입니다.
-따라서 `packageimport.common` 패키지의 A 클래스 객체를 생성하려면 단순 `A a = new A()`가 아닌, `packageimport.common.A a = new packageimport.A()`와 같이 사용해야 합니다.
+따라서 `packageimport.common` 패키지의 A 클래스 객체를 생성하려면 단순 `A a = new A()`가 아닌, `packageimport.common.A a = new packageimport.common.A()`와 같이 사용해야 합니다.
 
 ```java
 package packageimport.common;
