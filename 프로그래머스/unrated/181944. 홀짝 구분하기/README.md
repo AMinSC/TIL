@@ -1,10 +1,10 @@
 # [level unrated] 홀짝 구분하기 - 181944 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181944) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181944?language=java) 
 
 ### 성능 요약
 
-메모리: 7.53 MB, 시간: 11.76 ms
+메모리: 67.1 MB, 시간: 137.57 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2023년 11월 6일 0:5:50
+2023년 12월 5일 9:13:40
 
 ### 문제 설명
 
