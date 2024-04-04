@@ -28,10 +28,10 @@
 ### 자바의 플랫폼 독립성
 자바의 가장 큰 특징이자 좌우명인 `Write Once, Run Anywhere(한 번 작성하면 어느 플랫폼에서나 실행)`은 플랫폼 독립성을 뜻합니다.
 
-- `플랫폼 종속성(platform dependence)` : 이전에 프로그래밍 언어에서 얘기했던 각 운영체제마다 서로 다른 기계어를 사용해야 되는 것을 말합니다
+- `플랫폼 종속성(platform dependence)` : 이전에 프로그래밍 언어에서 얘기했던 각 운영체제마다 서로 다른 기계어를 사용해야 되는 것을 말합니다.
 따라서 맥에서 만들어진 실행파일(.app)을 윈도우(.exe)에서 사용할 수 없습니다.
 
-- `플랫폼 독립성 (platform indedpendence)` : 이와 반대로 하나의 프로그램으로 모든 운영체제에서 실행 가능한 것을 말하며, 이유는 `자바 가상 머신(Java Virtual Machine)`덕분입니다.
+- `플랫폼 독립성 (platform independence)` : 이와 반대로 하나의 프로그램으로 모든 운영체제에서 실행 가능한 것을 말하며, 이유는 `자바 가상 머신(Java Virtual Machine)`덕분입니다.
 
 > 각 운영체제마다 자바를 사용하기 위해선 `자바 가상 머신(JVM)`이 있어야 하고, 이 가상 머신 위에서 자바의 `실행파일(.class)`을 읽어 들일수 있기 때문입니다.
 
@@ -58,7 +58,6 @@
 
 - `인텔리제이(무료, 유료)` : 코틀린(Kotlin)을 만든 제작사 JetBrains에서 만든 IDE로 이클립스보다 상대적으로 뛰어나다고 평가되고 있습니다.  그렇기 때문에 유료버전임에도 불구하고 많이 사용되고 있습니다.
 
-https://ssdragon.tistory.com/11
 
 ## 자바 프로젝트
 
@@ -79,9 +78,9 @@ https://ssdragon.tistory.com/11
 
 ```
 📦 Project name
- ┗ 📂src
-   ┗ 📂Package name
-     ┗ 📜Sorce name
+ ┣ 📂src
+ ┃ ┗ 📂Package name
+ ┃   ┗ 📜Sorce name
  ┗ 📂bin
    ┗ 📂Package name
      ┗ 📜Sorce name
@@ -116,7 +115,7 @@ package example;
 
 public class Test {
 
-    public static void main(String[ ar]) {
+    public static void main(String[] args) {
         // 화면 출력 코드(1줄 주석)
         System.out.println("콘솔 화면 출력");
     }
@@ -127,7 +126,7 @@ public class Test {
 
 - `패키지 선언부(package daclaration)` : 주석을 제외한 첫 줄에 반드시 선언되어야 합니다.  다만, default package를 사용할 때는 생략합니다.
 
-- `클래스 선언부(class declaration)` : `public`은 선언한 클래스를 다른 곳에서도 사용 가능하다는 의미로 자세한 내용은 다음에 알아보겠습니다.
+- `클래스 선언부(class declaration)` : `public`은 선언한 클래스를 다른 곳에서도 사용 가능하다는 의미로 자세한 내용은 `접근 제어자`에서 알아보겠습니다.
 
 > 나중에 자세히 다루겠지만, 내부 구성 요소는 `필드(field)`, `메서드(method)`, `생성자(constructor)`, `이너 클래스(inner class)`입니다.
 
@@ -148,7 +147,7 @@ public class Test {
 말 그대로 메서드 안의 내용을 모두 출력 후 끝에 개행('\n')을 생성함으로써 자동 줄 바꿈이 되는 메서드입니다.
 
 - `1줄로 출력 - System.out.print()`
-println과 다르게 끝에 개행이 생략되어 출력 뒤쪽에 커서가 갑니다.
+println() 메서드와 다르게 끝에 개행이 생략되어 출력 뒤쪽에 커서가 갑니다.
 즉 출력물이 자동 줄 바꿈이 되지 않고 출력하는 메서드입니다.
 
 - `형식대로 출력 = System.out.printf()`
