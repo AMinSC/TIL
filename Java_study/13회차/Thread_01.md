@@ -102,7 +102,7 @@ public class TheNeedForThread {
 
 하지만 멀티 스레드에서는 동시성 또는 병렬성을 가지고 처리합니다.
 
-- `동시성`
+### `동시성`
 
 동시성은 처리할 작업의 수가 CPU의 코어 수보다 많을 때입니다.
 예를 들어 CPU의 코어는 1개인데, 동시에 처리해야 할 작업이 2개일 때가 이에 해당합니다.
@@ -113,7 +113,7 @@ public class TheNeedForThread {
 
 따라서 동시성은 엄밀히 이야기하면, 두 작업이 동시에 실행되는 것이 아니라 동시에 실행되는 것처럼 보이도록 하는 방식인 겁니다.
 
-- `병렬성`
+### `병렬성`
 
 만일 CPU의 코어 수가 작업 수보다 많을 때는 각각의 작업을 각각의 코어에 할당해 동시에 실행할 수 있기 때문에 그야말로 동시에 작업이 수행됩니다.
 이를 스레드의 `병렬성(parallelism)`이라 합니다.
@@ -180,7 +180,7 @@ myThread.start();
 
 스레드는 CPU를 사용하는 최소 단위입니다.
 실제 CPU와 이야기하기 위해서는 자신만의 `스택(stack)`메모리를 포함해 준비해야 할 것이 많습니다.
-start() 메서드는 바로 `새로운 스레드 생성/추가를 위한 모든 준비`, `새로운 스레드 위에서 run() 실행`이라는 2가지 작업을 연속으로 실행하는 메서드입니다
+start() 메서드는 바로 `새로운 스레드 생성/추가를 위한 모든 준비`, `새로운 스레드 위에서 run() 메서드 실행`이라는 2가지 작업을 연속으로 실행하는 메서드입니다
 
 > 스레드의 내부에 run() 메서드가 있기 때문에 run()을 직접 호출해도 오류는 발생하지 않습니다.
 다만, 이때 별도의 스레드가 아닌 현재의 스레드에서 메서드처럼 실행됩니다.
@@ -201,7 +201,7 @@ class SMIFileThread extends Thread {
         String[] strArray = {"하나", "둘", "셋", "넷", "다섯"};
         try {Thread.sleep(10);} catch (InterruptedException e) {}
         // 자막 번호 출력
-        for (STring s: strArray) {
+        for (String s: strArray) {
             System.out.println(" -(자막 번호) " + s);
             try {Thread.sleep(200);} catch (InterruptedException e) {}
         }
@@ -250,7 +250,7 @@ class SMIFileThread extends Thread {
         String[] strArray = {"하나", "둘", "셋", "넷", "다섯"};
         try {Thread.sleep(10);} catch (InterruptedException e) {}
         // 자막 번호 출력
-        for (STring s: strArray) {
+        for (String s: strArray) {
             System.out.println(" -(자막 번호) " + s);
             try {Thread.sleep(200);} catch (InterruptedException e) {}
         }
@@ -299,11 +299,11 @@ public class CreateAndStartThread {
 
 첫 번째는 Runnable 인터페이스를 구현한 클래스를 정의하는 것으로, 이 run() 추상 메서드를 구현하면서 여기에 스레드의 작업 내용을 작성합니다. 
 두 번째는 앞서 정의한 클래스를 이용해 Runnable 객체를 생성합니다.
-문제는 Runnable 객체의 내부에는 start() 메서드가 존재하지 않기 때문에 start()를 가지고 있는 Thread 객체를 생성해야 합니다.
+문제는 Runnable 객체의 내부에는 start() 메서드가 존재하지 않기 때문에 start() 메서드를 가지고 있는 Thread 객체를 생성해야 합니다.
 다만, 구현한 run() 메서드 자체는 Runnable 객체가 가지고 있으므로 Thread 객체를 생성할 때 Runnable객체를 생성자의 매개변수로 넘겨줍니다.
 
-이렇게 객체를 생성하면 생성된 Thread 객체 내부의 run() 메서는 생성자 매개변수로 넘어온 Runnable 객체 내부의 run()으로 대체됩니다.
-이후 첫 번째 방법과 동일하게 Thread 객체의 start()를 호출해 스레드를 실행합니다.
+이렇게 객체를 생성하면 생성된 Thread 객체 내부의 run() 메서드는 생성자 매개변수로 넘어온 Runnable 객체 내부의 run() 메서드로 대체됩니다.
+이후 첫 번째 방법과 동일하게 Thread 객체의 start() 메서드를 호출해 스레드를 실행합니다.
 
 > Runnable 인터페이스를 구현한 클래스를 직접 정의하는 대신 익명 이너 클래스 정의 방법을 이용해 바로 객체를 생성할 수도 있습니다.
 
@@ -332,7 +332,7 @@ myThread.start()
 
 다음 예제는 Runnable 인터페이스를 구현해 스레드를 생성하는 두 번째 방법을 사용해 비디오 프레임과 자막 파일 출력을 동시에 실행시킨 첫 번째 예제입니다.
 
-방법 (1)의 첫 번째 예제와 마찬가지로 main 스레드와 SMIFileRunnable 객체를 사용해 각가 비디오 프레임 번호와 자막 번호를 출력했으며, main 스레드에서는 추가로 SMIFileRunnable 객체를 넘겨받아 스레드를 생성하고 실행하는 기능을 포함하고 있습니다.
+방법 (1)의 첫 번째 예제와 마찬가지로 main 스레드와 SMIFileRunnable 객체를 사용해 각자 비디오 프레임 번호와 자막 번호를 출력했으며, main 스레드에서는 추가로 SMIFileRunnable 객체를 넘겨받아 스레드를 생성하고 실행하는 기능을 포함하고 있습니다.
 
 ```java
 // 2개의 스레드 활용 (main, SMIFileThread)

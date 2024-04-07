@@ -3,7 +3,7 @@
 ## 스레드의 속성
 생성한 스레드의 객체를 참조하거나 우선순위를 지정하는 것과 같은 스레드의 속성 종류와 이를 활용하는 방법을 알아보겠습니다.
 
-### 현재 스레드 객체 참좃값 얻어오기
+### 현재 스레드 객체 참조값 얻어오기
 Thread 클래스를 직접 정의하고 객체를 생성해 사용할 때 참조 변수를 이용해 언제든지 스레드 객체의 속성(이름 등)을 가져올 수 있습니다.
 하지만, 직접 스레드 객체를 생성했을 때가 아니거나(자바의 스레드 풀 또는 main 스레드 등) 객체를 생성할 때 참조 변수를 정의하지 않을 경우에는 (new Thread().start()) 객체를 참조할 수 없게 됩니다.
 이처럼 스레드 객체를 참조할 수 없을 때 Thread 클래스의 정적 메서드인 currentThread() 메서드를 이용해 현재 스레드 객체의 참조값을 얻어올 수 있습니다.
@@ -35,7 +35,7 @@ activeCount()는 동일한 스레드 그룹 내에서 실행 중인 스레드의
 
 ```java
 // 스레드 이름 설정하기
-String setName(String name)
+setName(String name)
 ```
 
 스레드의 이름을 직접 지정하지 않으면 컴파일러가 대신해서 자동으로 부여합니다. 이때 자동으로 부여되는 이름은 Thread-0, Thread-1, ..., Thread-N 처럼 `Thread-숫자`의 형태로 새롭게 생성될 때마다 숫자가 늘어납니다.
@@ -107,7 +107,7 @@ Thread-8
 ### 스레드의 우선순위
 모든 스레드는 1 ~ 10 사이의 우선순위를 갖고 있습니다. 1이 가장 낮은 순위 값, 10이 가장 높은 순위값입니다. 우선순위를 지정하지 않으면 기본값으로 5의 우선순위를 갖습니다.
 
-다음은 실제 자바 API에서 제공하는 Thread 클래스에 정의된 정적 상수입니다. 대표적으로 수선순위가 1, 5, 10일 때는 각가 정적 상수 Thread.MIN_PRIORITY, Thread.NORM_PRIORITY, Thread.MAX_PRIORITY 값으로 정의되어 있습니다.
+다음은 실제 자바 API에서 제공하는 Thread 클래스에 정의된 정적 상수입니다. 대표적으로 우선순위가 1, 5, 10일 때는 각자 정적 상수 Thread.MIN_PRIORITY, Thread.NORM_PRIORITY, Thread.MAX_PRIORITY 값으로 정의되어 있습니다.
 
 ```java
 // The minimum priority that a thread can have.
@@ -129,7 +129,7 @@ public final static int MAX_PRIORITY = 10;
 
 ```java
 // 스레드 객체의 우선순위 정하기
-void setPriority()
+setPriority(int newPriority)
 
 // 스레드 객체의 우선순위 가져오기
 int getPriority()
@@ -151,7 +151,7 @@ package sec03_threadproperties.EX02_ThreadProperties_2;
 class MyThread extends Thread {
     @Override
     public void run() {
-        for (long 1 = 0; i < 1000000000; i++) {  // 시간 지연용
+        for (long i = 0; i < 1000000000L; i++) {  // 시간 지연용
             System.out.println(getName() + " 우선순위: " + getPriority())
         }
     }
@@ -174,7 +174,7 @@ public class ThreadProperties_2 {
         // 우선순위 직접 지정
         for (int i = 0; i < 3; i++) {
             Thread thread = new MyThread();
-            thread.setNAme(i + "번째 스레드");
+            thread.setName(i + "번째 스레드");
             if (i == 9) thread.setPriority(10);
             thread.start();
         }
@@ -202,7 +202,7 @@ public class ThreadProperties_2 {
 
 ```java
 // 데몬 스레드 설정
-void setDaemon(boolean on)
+setDaemon(boolean on)
 ```
 
 생성한 객체의 데몬 설정 여부는 Thread 클래스의 인스턴스 메서드인 isDaemon() 메서드를 이용해 언제든지 확인할 수 있습니다.
@@ -212,8 +212,7 @@ void setDaemon(boolean on)
 boolean isDaemon()
 ```
 
-이때 주의해야 할 점은 데몬 설정은 반드시 스레드를 실행하기 전, 즉 start() 메서드 호출 전에 설정해야 한다는 것입니다.
-일단 스레드가 실행되고 나면 데몬 설정은 바꿀 수 없습니다.
+>이때 주의해야 할 점은 데몬 설정은 반드시 스레드를 실행하기 전, 즉 start() 메서드 호출 전에 설정해야 한다는 것입니다.  일단 스레드가 실행되고 나면 데몬 설정은 바꿀 수 없습니다.
 
 다음은 3.5초 동안 지속되는 main 스레드 내에서 5초 동안 지속하는 MyThread 객체를 생성 및 실행한 예입니다.
 여기서 MyThread는 일반 스레드로 정의했습니다.
@@ -261,7 +260,7 @@ thread1: 4초
 thread1: 5초
 ```
 
-다음은 위의 예제와 동일한 조건으로 생선 한 MyThread 객체를 실행하기 전에 setDaemon(ture)로 설정해 데몬 스레드로 정의한 것만 다릅니다.
+다음은 위의 예제와 동일한 조건으로 생성 한 MyThread 객체를 실행하기 전에 setDaemon(ture)로 설정해 데몬 스레드로 정의한 것만 다릅니다.
 실행 결과를 살펴보면 MyThread가 아직 실행할 내용이 남아 있는데도 main스레드가 종료되면 함께 종료됩니다.
 
 ```java
@@ -270,7 +269,7 @@ package sec03_threadproperties.EX04_ThreadProperties_3_2;
 class MyThread extends Thread {
     @Override
     public void run() {
-        System.out.println(getName() + ": " +(isDaemin()? "데몬 스레드":"일반 스레드"));
+        System.out.println(getName() + ": " +(isDaemon()? "데몬 스레드":"일반 스레드"));
         for (int i = 0; i < 6; i++) {
             System.out.println(getName() + ": " + i + "초");
             try {Thread.sleep(1000);} catch (InterruptedException e) {}
@@ -778,7 +777,7 @@ switch (state) {
 
 ![thread_state](asset/thread_state.png)
 
-- NEW, TUNNABLE, TERMINATED
+- NEW, RUNNABLE, TERMINATED
 처음 객체가 생성되면 NEW의 상태를 가지며, 이후 start() 메서드로 실행하면 RUNNABLE 상태가 됩니다.
 이 상태에서는 실행과 실행 대기를 반복하면서 CPU를 다른 스레드들과 나눠 사용합니다.
 이후 run() 메서드가 종료되면 TERMINATED 상태가 됩니다.
@@ -811,7 +810,7 @@ void interrupt()
 
 - BLOCKED
 두 번째 일시정지 상태는 BLOCKED 상태로 바로 이전에 살펴본 동기화 메서드 또는 동기화 블록을 실행하기 위해 먼저 실행 중인 스레드의 실행 완료를 기다리는 상태입니다.
-다른 말로 이야기 하면 먼저 실행 중인 스레드가 열쇠를 반납할 때가지 문 앞에서 기다리고 있는 상태가 바로 BLOCKED입니다. 당연히 객체의 잠금이 풀리면, 즉 앞의 스레드의 동기화 영역 수행이 완료되면 BLOKED 상태의 스레드는 RUNNABLE 상태가 되어 해당 동기화 영역을 실행하게 됩니다.
+다른 말로 이야기 하면 먼저 실행 중인 스레드가 열쇠를 반납할 때가지 문 앞에서 기다리고 있는 상태가 바로 BLOCKED입니다. 당연히 객체의 잠금이 풀리면, 즉 앞의 스레드의 동기화 영역 수행이 완료되면 BLOCKED 상태의 스레드는 RUNNABLE 상태가 되어 해당 동기화 영역을 실행하게 됩니다.
 
 - WAITING
 마지막은 WAITING 상태입니다. 시간 정보가 없는 join() 메서드가 호출되거나 wait() 메서드가 호출되면 WAITING 상태가 됩니다.
@@ -845,7 +844,7 @@ void notifyAll()
 ```
 
 notify()는 WAITING 상태에 있는 하나의 스레드를 RUNNABLE 상태로 전환하는 메서드이며, notifyAll()은 WAITING 상태의 모든 스레드를 RUNNABLE 상태로 전환하는 메서드입니다.
-여기서 주의해야 할 점은 `wtit(), notify(), notifyAll()은 동기화 블록 내에서만 사용할 수 있습니다.`
+여기서 주의해야 할 점은 `wait(), notify(), notifyAll()은 동기화 블록 내에서만 사용할 수 있습니다.`
 
 ### NEW, RUNNABLE, TERMINATED
 먼저 NEW 상태는 Thread 객체를 new 키워드를 이용해 생성한 시점으로 아직 start() 메서드 호출 이전 상태, 즉 실행 이전 상태입니다.
@@ -1177,7 +1176,7 @@ thread3->TERMINATED
 이때는 조인된 스레드가 완료되거나 interrupt() 메서드 호출로 예외를 인위적으로 발생시켰을 때만 다시 RUNNABLE 상태로 돌아갈 수 있습니다.
 
 스레드의 인스턴스 메서드인 wait()를 호출할 때도 해당 스레드는 WAITING 상태가 됩니다.
-정확히는 Object 클래스의 인스턴스 메서드이며, Thread 클래스도 당연히 Object 클래스의 자식 클래싱므로 이 메서드를 포함하고 있습니다.
+정확히는 Object 클래스의 인스턴스 메서드이며, Thread 클래스도 당연히 Object 클래스의 자식 클래스이므로 이 메서드를 포함하고 있습니다.
 
 wait() 메서드의 호출로 WAITING 상태가 됐을 때 주의해야 할 점은 2가지 입니다.
 첫 번째는 일단 wait() 메서드로 WAITING 상태가 된 스레드는 다른 스레드에서 notify() 또는 notifyAll()을 호출해야만 RUNNABLE 상태가 될 수 있다는 점이며, 이는 스스로 WAITING 상태를 벗어날 수 없다는 것입니다.
@@ -1186,7 +1185,7 @@ wait() 메서드의 호출로 WAITING 상태가 됐을 때 주의해야 할 점�
 처음부터 다시 실행되는 것이 아니므로 wati()의 위치를 신경써서 작성해야 합니다.
 그리고 두 번째는 wait(), notify(), notifyAll() 메서드는 반드시 동기화 블록에서만 사용할 수 있다는 점입니다.
 
-다음 예제에서는 데이터 1개만을 가지고 있는 객체를 데이터를 쓰는 스레드와 읽는 스레드를 동기화 메서드로 설정했습니다.
+다음 예제에서는 데이터 1개만을 가지고 있는 객체를, 데이터를 쓰는 스레드와 읽는 스레드를 동기화 메서드로 설정했습니다.
 즉, 읽고 쓰는 것은 절대 동시에 이러나지 않습니다.
 하지만 결과는 엉망이 됩니다.
 이유는 이전에도 언급되었듯이 WAITING 상태인 스레드가 순서대로 진행되는 것이 아닌, 경쟁을 통해서 실행되기 때문입니다.
@@ -1230,7 +1229,7 @@ public class Waiting_WaitNotify_1 {
 }
 ```
 
-이을 해결하기 위해서는 쓰기 -> 읽기 -> 쓰기 -> 읽기... 와 같이 반복되어야 하며, 이때 사용하는 메서드가 바로 wait(), notify() 메서드 입니다.
+이를 해결하기 위해서는 쓰기 -> 읽기 -> 쓰기 -> 읽기... 와 같이 반복되어야 하며, 이때 사용하는 메서드가 바로 wait(), notify() 메서드 입니다.
 
 다음 예제에서는 아래와 같은 순서로 실행되도록 작성해보겠습니다.
 
