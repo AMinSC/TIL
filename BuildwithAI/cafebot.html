@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--
+ * @license
+ * Copyright 2023 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="image/svg+xml" href="favicon.svg" />
+    <title>Generative AI - Chat</title>
+    <link rel="stylesheet" href="cafebot.css">
+    <style>
+      /* General Styles */
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+      }
+
+      #chat-history {
+        flex: 1;
+        overflow-y: scroll;
+        padding: 10px;
+      }
+
+      .message {
+        display: flex;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #eee;
+      }
+
+      .message.user {
+        flex-direction: row-reverse;
+      }
+
+      .message .author {
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      .message .content {
+        flex: 1;
+      }
+
+      .thumb {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      /* Form Styles */
+      .form-container {
+        display: flex;
+        margin-top: 20px;
+      }
+
+      #form {
+        flex: 1;
+        display: flex;
+      }
+
+      #prompt {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button[type="submit"] {
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>Generative AI - Chat</header>
+    <div class="container">
+      <div id="chat-history"></div>
+    </div>
+    <div class="form-container">
+      <form id="form">
+        <input id="prompt" />
+        <button type="submit">Send</button>
+      </form>
+      <template id="thumb-template">
+        <img class="thumb" />
+      </template>
+    </div>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai",
+          "marked": "https://esm.run/marked"
+        }
+      }
+    </script>
+    <script>
+      //************ 여기에 API키를 입력합니다 ************//
+      //************ 여기에 API키를 입력합니다 ************//
+      //************ 여기에 API키를 입력합니다 ************//
+      //************ 여기에 API키를 입력합니다 ************//
+      const MY_API_KEY = //API_KEY
+
+      //************ 여기에 내가 원하는 설정을 입력합니다 ************//
+      //************ 여기에 내가 원하는 설정을 입력합니다 ************//
+      //************ 여기에 내가 원하는 설정을 입력합니다 ************//
+      const MY_PROMPT_TEXT = `
+                카페 메뉴는
+                아메리카노: 3000원
+                카페라떼: 3500원
+                카푸치노: 4000원
+                바닐라라떼 :4500원
+                에스프레소: 2500원
+                샷 추가 : 샷당 500원
+                이다. 주문을 받아서 계산을 해주는 역할이다.
+                인사, 주문, 계산, 메뉴설명만 대답 할 수 있다.
+                주문에 아이스가 있는 경우에는 얼음을 추가한다.
+                메뉴에 없는 메뉴는 판매하지 않는다.
+                메뉴 설명이나 계산을 할때는 마크다운 형식으로 보여줘.
+                다른 대화는 할 수 없다.
+                다른 질문을 추가 할 수 없다.
+            `;
+    </script>
+    <script type="module" src="cafebot.js"></script>
+  </body>
+</html>
