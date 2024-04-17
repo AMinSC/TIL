@@ -172,15 +172,165 @@ aList1.remove(0);   // 오류(UnsupportedOperationException)
 
 > 모든 컬렉션의 원소에는 객체만 올 수 있습니다. 따라서 remove(1)과 같이 기본 자료형 값으로 숫자를 직접 넣으면 숫자 1은 인덱스값을 의미합니다.
 
+아래는 `ArrayList<E>`의 주요 메서드 사용 예시 코드입니다.
 
+```java
+// package
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class ArrayListMethod {
+    public static void main(String[] args) {
+        List<Integer> aList1 = new ArrayList<Integer>();
+        // 1. add(E element)
+        aList1.add(3);
+        aList1.add(4);
+        aList1.add(5);
+        System.out.println(aList1.toString());
+        // 2. add(int index, E element)
+        aList1.add(1, 6);
+        System.out.println(aList1.toString());
+        // 3. addAll(또 다른 리스트 객체)
+        List<Integer> aList2 = new ArrayList<>();
+        aList2.add(1);
+        aList2.add(2);
+        aList2.addAll(aList1);
+        System.out.println(aList2);
+        // 4. addAll(int index, 또 다른 리스트 객체)
+        List<Integer> aList3 = new ArrayList<>();
+        aList3.add(1);
+        aList3.add(2);
+        aList3.addAll(1, aList3);
+        // 5. set(int index, E element)
+        aList3.set(1, 5);
+        aList3.set(3, 6);
+        // aList3.set(4, 7);    // java.lang.IndexOutOfBoundsException;
+        System.out.println(aList3);
+        // 6. remove(int index)
+        aList3.remove(1);
+        System.out.println(aList3);
+        // 7. remove(Object o)
+        aList3.remove(new Integer(2));
+        System.out.println(aList3);
+        // 8. clear()
+        aList3.clear();
+        System.out.println(aList3);
+        // 9. isEmpty()
+        System.out.println(aList3.isEmpty());
+        // 10. size()
+        System.out.println(aList3.size());
+        aList3.add(1);
+        aList3.add(2);
+        aList3.add(3);
+        System.out.println(aList3);
+        System.out.println(aList3.size());
+        // 11. get(int index)
+        System.out.println("0번째: " + aList3.get(0));
+        System.out.println("1번째: " + aList3.get(1));
+        System.out.println("2번째: " + aList3.get(2));
+        for (int i = 0; i < aList3.size(); i++)
+            System.out.println(i + "번째: " + aList3.get(i));
+        // 12. toArray() List -> Array
+        Object[] object = aList3.toArray();
+        System.out.println(Arrays.toString(object));
+        // 13-1. toArray(T[] t) -> T[]
+        Integer[] integer1 = aList3.toArray(new Integer[0]);
+        System.out.println(Arrays.toString(integer1));
+        // 13-2. toArray(T[] t) -> T[]
+        Integer[] integer2 = aList3.toArray(new Integer[5]);
+        System.out.println(Array.toString(integer2));
+    }
+}
+```
+output
+```
+[3, 4, 5]
+[3, 6, 4, 5]
+[1, 2, 3, 6, 4, 5]
+[1, 1, 2, 2]
+[1, 5, 2, 6]
+[1, 2, 6]
+[1, 6]
+[]
+true
+0
+[1, 2, 3]
+3
+0번째: 1
+1번째: 2
+2번째: 3
+0번째: 1
+1번째: 2
+2번째: 3
+[1, 2, 3]
+[1, 2, 3]
+[1, 2, 3, null, null]
+```
 
 
 ### `Vector<E>` 구현 클래스
+`List<E>`를 상속했으므로 당연히 동일한 타입의 객체를 수집할 수 있고, 메모리를 동적 할당할 수 있으며, 데이터의 추가, 변경, 삭제 등이 가능합니다.
+또한 `ArrayList<E>`와 메서드 기능 및 사용법 또한 완벽히 동일합니다.
+
+차이점은 `Vector<E>`의 주요 메서드는 `동기화 메서드(synchronized method)`로 구현되어 있으므로 멀티 쓰레드에 적합하도록 설계되어 있습니다.
+
+```java
+public synchronized E remove(int index) {
+    // ...
+}
+
+public synchronized E get(int index) {
+    // ...
+}
+```
+
+문법 구조는 위와 같으며, 동기화 메서드는 하나의 공유 객체를 2개의 쓰레드가 동시에 사용할 수 없도록 만든 메서드입니다.
+메서드를 동기화 하지 않을 경우, 한 객체에 하나의 쓰레드는 데이터를 읽고, 또 하나의 쓰레드는 데이터를 삭제하는 작업을 동시에 수행해 작업이 충돌하는 상황이 발생할 수 있습니다.
+
+정리하면 `Vector<E>`는 `ArrayList<E>`와 동일한 기능을 수행하지만, 멀티 쓰레드에서 사용할 수 있도록 기능이 추가된 것입니다.
+물론 하나의 쓰레드로만 구성된 싱글 쓰레드에서도 사용할 수 있지만, 싱글 쓰레드에서는 굳이 무겁고 많은 리소스를 차지하는 `Vector<E>`를 쓰는 대신, `ArrayList<E>`를 쓰는 것이 효율적입니다.
+
+멀티 쓰레드에서 사용할 수 있다는 점을 제외하면 사용 방법은 `ArrayList<E>`와 동일합니다.
+
 
 ### `LinkedList<E>` 구현 클래스
+`List<E>`의 모든 공통적인 특징(동일 타입 수집, 메모리 동적 할당, 데이터 추가/변경/삭제 메서드)을 모두 지니고 있으며, `ArrayList<E>`처럼 메서드를 동기화(synchronized)하지 않았기 때문에 싱글 쓰레드에서 사용하기 적합합니다.
+
+그렇다면 `LinkedList<E>`와 `ArrayList<E>`의 차이점을 알아보겠습니다.
+1. `LinkedList<E>`는 `저장 용량(capacity)`을 매개변수로 갖는 생성자가 없기 때문에 객체를 생성할 때 저장 용량을 지정할 수 없습니다.
+    ```java
+    List<E> aLinkedList1 = new LinkedList<Integer>();   // O
+    List<E> aLinkedList2 = new LinkedList<Integer>(20); // X
+    ```
+2. 내부적으로 데이터를 저장하는 방식이 서로 다릅니다.
+`ArrayList<E>`가 모든 데이터를 위치 정보(index)와 값으로 저장하는 반면, `LinkedList<E>`는 앞뒤 객체의 위치 정보를 저장합니다.
+![alt text](asset/ArrayList-SinglyLinkedList-doublyLinkedList.png)
+[출처: https://www.happycoders.eu/algorithms/array-vs-linked-list/]
+
+데이터를 저장하는 방식만 다를 뿐 메서드의 종류와 활용 방법은 `Vector<E>`에서와 마찬가지로 `ArrayList<E>` 예제와 완벽히 동일합니다.
 
 ### `ArrayList<E>`와 `LinkedList<E>`의 성능 비교
+만약 `ArrayList<E>`와 `LinkedList<E>`에 각각 값을 넣어본다고 가정해보겠습니다.
 
+- LinkedList
+    ![alt text](asset/insertingAnElementIntoALinkedList.png)
+- ArrayList
+    ![alt text](asset/inserting-an-element-into-a-ArrayList.png)
+[출처: https://www.happycoders.eu/algorithms/array-vs-linked-list/]
+
+위 이미지를 보면 알 수 있듯이 LinkedList의 경우 어느곳에 값을 넣더라도 앞 요소값과 뒤 요소값을 새로운 요소값의 위치만 추가해주면 되는 반면, ArrayList의 경우 값을 넣게 되면 기존의 값이 다음 위치(index)로 옮겨지는 것이 반복되거나 새로운 ArrayList를 만들면서 새로운 값을 복제하는 일이 반복될 것입니다.
+
+다만, 값을 읽을 때(get(int index))는 LinkedList는 처음부터 원하는 값을 읽을 때까지 순회하는 반면, ArrayList는 위치값(index)을 알고 있기 때문에 빠르게 조회가 가능한 것을 알 수 있습니다.
+
+따라서 데이터를 추가 또는 삭제할 때는 LinkedList가 빠르고, 데이터를 읽을 때는 ArrayList가 빠르다는 것을 알 수 있습니다.
+
+|          Operation         	| Array 	| Linked List 	|
+|:--------------------------:	|:-----:	|:-----------:	|
+| Accessing the nth element: 	|  O(1) 	|     O(n)    	|
+| Inserting an element:      	|  O(n) 	|     O(1)    	|
+| Removing an element:       	|  O(n) 	|     O(1)    	|
+| Determining the size:      	|  O(1) 	|     O(n)    	|
 
 ## `Set<E>` 컬렉션 인터페이스
 
