@@ -443,3 +443,87 @@ putput
 [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50]
 ```
 
+#### `TreeSet<E>`에서 데이터 크기 비교
+데이터의 크기 비교는 숫자의 경우 오름차순으로 정렬되며, 문자열의 경우 사전 순서로 비교됩니다.
+
+하지만 개발자가 작성한 임의의 클래스 객체는 아래와 같이 예외를 불러올 수 있습니다.
+
+```java
+class MyClass {
+    int data1;
+    int data2;
+    public MyClass(int data1, int data2) {
+        this.data1 = data1;
+        this.data2 = data2;
+    }
+}
+
+TreeSet<MyClass> treeSet3 = new TreeSet<MyClass>();
+MyClass myClass1 = new MyClass(2, 5);
+MyClass myClass2 = new MyClass(3, 3);
+treeSet3.add(myClass1);         // 예외 발생
+treeSet3.add(myClass2);         // 예외 발생
+System.out.println(treeSet3);   // 예외 발생
+```
+이 중 어떤 객체가 크다고 해야될지 정의해줄 필요가 있습니다.
+
+이때 사용되는 크기 비교의 기준을 제공하는 방법은 2가지가 있습니다.
+1. java.lang 패키지의 `Comparable<E>` 제네릭 인터페이스를 구현하는 것
+이 인터페이스의 내부에는 정수값을 리턴하는 int compareTo(T t) 추상 메서드가 존재합니다.
+크기 비교의 결과는 설정한 기준에 따라 자신의 객체가 매겨변수 t보다 작을 때는 음수, 같을 때는 0, 클 때는 양수를 리턴하는데, 일반적으로 -1, 0, 1을 리턴합니다.
+    ```java
+    class MyComparableClass implements Comparable<MyComparableClass> {
+        int data1;
+        int data2;
+        public MyComparableClass(int data1, int data2) {
+            this.data1 = data1;
+            this.data2 = data2;
+        }
+        @Override
+        public int compareTo(MyComparableClass m) {
+            if (data1 < data2) {
+                return -1;
+            } else if (data1 == data2) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    }
+
+    TreeSet<MyComparableClass> treeSet4 = new TreeSet<MyClassComparableClass>();
+    MyComparableClass myComparableClass1 = new MyComparableClass(2, 5);
+    MyComparableClass myComparableClass2 = new MyComparableClass(3, 3);
+    treeSet4.add(myComparableClass1);
+    treeSet4.add(myComparableClass2);
+    for (MyComparableClass mcc: treeSet4) {
+        System.out.println(mcc.data1);
+    }
+    ```
+
+2. `TreeSet<E>` 객체를 생성하면서 생성자 매개변수로 `Comparator<T>` 객체를 제공
+`Comparator<E>` 또한 인터페이스이므로 `TreeSet<E>`객체 생성 과정에서 내부에 포함된추상 메서드인 compare()를 구현함으로써 크기 비교의 기준을 갖게 되는 것입니다.
+    ```java
+    TreeSet<MyClass> treeSet5 = new TreeSet<MyClass>(new Comparator<MyClass>() {
+        @Override
+        public int compare(MyClass o1, MyClass o2) {
+            if (o1.data1 < o2.data2) {
+                return -1;
+            } else if (o1.data1 == o2.data2) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    });
+
+    MyClass myClass1 = new MyClass(2, 5);
+    MyClass myClass2 = new MyClass(3, 3);
+    treeSet5.add(MyClass1);
+    treeSet5.add(MyClass2);
+    for (MyClass mc: treeSet5) {
+        System.out.println(mc.data1);
+    }
+    ```
+
+
