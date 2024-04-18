@@ -1,4 +1,4 @@
-# 컬렉션 프레임워크_01
+# 컬렉션 프레임워크_01 (LIST)
 컬렉션은 이름에서 유추할 수 있듯이 `여러 데이터를 수집해 놓은 자료구조 입니다.`
 컬렉션의 가장 큰 특징은 데이터 저장 공간의 크기가 동적으로 변한다는 것이고, 따라서 데이터의 개수가 시간으적으로 별할 때는 컬력션 프레임워크가 유용합니다.
 
@@ -331,17 +331,4 @@ public synchronized E get(int index) {
 | Inserting an element:      	|  O(n) 	|     O(1)    	|
 | Removing an element:       	|  O(n) 	|     O(1)    	|
 | Determining the size:      	|  O(1) 	|     O(n)    	|
-
-## `Set<E>` 컬렉션 인터페이스
-
-### `Set<E>` 컬렉션의 특징
-
-### `Set<E>`의 주요 메서드
-
-### `HashSet<E>` 구현 클래스
-
-### `LinkedHashSet<E>` 구현 클래스
-
-### `TreeSet<E>` 구현 클래스
-
 
