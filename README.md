@@ -4,6 +4,9 @@ Today I Learned..
 ## AI Conference (24.04.12 ~ 24.04.13)
 ['google Gemini api' hands on for beginners](https://github.com/AMinSC/TIL/JejuConference/BuildwithAI)
 
+
+## Java Learning
+
 ## Django Learning
 [Django 교안](https://github.com/AMinSC/TIL/blob/main/django-laerning/teaching-plan/Django%EA%B5%90%EC%95%88.md)
 
