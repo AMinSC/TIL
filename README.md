@@ -6,11 +6,14 @@ Today I Learned..
 
 
 ## Java Learning
+[Java Contents](https://github.com/AMinSC/TIL/tree/main/JavaLearning)
 
 ## Django Learning
 [Django 교안](https://github.com/AMinSC/TIL/blob/main/django-laerning/teaching-plan/Django%EA%B5%90%EC%95%88.md)
 
-## Data Structures
+## Data Structures (With Python, C)
+- [Data Structures With Python]()
+- [Data Structures With C]()
 
 
 ## Algorithm
