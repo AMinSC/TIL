@@ -1,7 +1,7 @@
 # TIL
 Today I Learned..
 
-## AI Conference (24.04.12 ~ 24.04.13)
+## AI Conference
 ['google Gemini api' hands on for beginners](https://github.com/AMinSC/TIL/JejuConference/BuildwithAI)
 
 

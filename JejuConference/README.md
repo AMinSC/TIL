@@ -1,7 +1,5 @@
 # Jeju Web Conference
-## Time frame
-2023.
+## Time frame: 23.08.04 ~ 23.08.05
 
 # Juju AI Conference
-## Time frame
-2024.04
+## Time frame: 24.04.12 ~ 24.04.13
