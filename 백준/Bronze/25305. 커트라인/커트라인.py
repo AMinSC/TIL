@@ -1,9 +1,3 @@
-import sys
-input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
-
-n, k = map(int, input().split())
-X = list(map(int, input().split()))
-
-X.sort(reverse = True)
-print(X[k-1])
+_, s = map(int, input().split())
+score_list = list(map(int, input().split()))
+print(sorted(score_list, reverse=True)[s - 1])
