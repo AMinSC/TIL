@@ -338,7 +338,7 @@ class HashTagDelete(View):
     def post(self, request, hashtag_id):
         # 지울 객체를 찾아야 한다. -> 태그 객체
         try:
-            hashtag = HashTag.objects.get(pk=pk)
+            hashtag = HashTag.objects.get(pk=hashtag_id)
         
         except ObjectDoesNotExist as e:
             print('HashTag does not exist.', str(e))
