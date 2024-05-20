@@ -1,0 +1,32 @@
+IP:  - Time 2024-05-20 11:17:08 - DEBUG
+IP:  - Time 2024-05-20 11:17:08 - INFO
+IP:  - Time 2024-05-20 11:17:08 - WARNING
+IP:  - Time 2024-05-20 11:17:08 - ERROR
+IP:  - Time 2024-05-20 11:17:09 - DEBUG
+IP:  - Time 2024-05-20 11:17:09 - INFO
+IP:  - Time 2024-05-20 11:17:09 - WARNING
+IP:  - Time 2024-05-20 11:17:09 - ERROR
+IP:  - Time 2024-05-20 11:18:08 - DEBUG {message}
+IP:  - Time 2024-05-20 11:18:08 - INFO {message}
+IP:  - Time 2024-05-20 11:18:08 - WARNING {message}
+IP:  - Time 2024-05-20 11:18:08 - ERROR {message}
+IP:  - Time 2024-05-20 11:18:51 - DEBUG DE Your log message... IP:127.0.0.1
+IP:  - Time 2024-05-20 11:18:51 - INFO IF Your log message... IP:127.0.0.1
+IP:  - Time 2024-05-20 11:18:51 - WARNING WARN Your log message... IP:127.0.0.1
+IP:  - Time 2024-05-20 11:18:51 - ERROR ER Your log message... IP:127.0.0.1
+DE Your log message... IP:127.0.0.1 - Time 2024-05-20 11:20:20 - DEBUG 
+IF Your log message... IP:127.0.0.1 - Time 2024-05-20 11:20:20 - INFO 
+WARN Your log message... IP:127.0.0.1 - Time 2024-05-20 11:20:20 - WARNING 
+ER Your log message... IP:127.0.0.1 - Time 2024-05-20 11:20:20 - ERROR 
+IP:127.0.0.1 - Time 2024-05-20 11:21:47 - DEBUG 
+IP:127.0.0.1 - Time 2024-05-20 11:21:47 - INFO 
+IP:127.0.0.1 - Time 2024-05-20 11:21:47 - WARNING 
+IP:127.0.0.1 - Time 2024-05-20 11:21:47 - ERROR 
+IP: 127.0.0.1 - Time 2024-05-20 11:22:03 - DEBUG 
+IP: 127.0.0.1 - Time 2024-05-20 11:22:03 - INFO 
+IP: 127.0.0.1 - Time 2024-05-20 11:22:03 - WARNING 
+IP: 127.0.0.1 - Time 2024-05-20 11:22:03 - ERROR 
+IP: 127.0.0.1 - Time 2024-05-20 11:39:09 - DEBUG 
+IP: 127.0.0.1 - Time 2024-05-20 11:39:09 - INFO 
+IP: 127.0.0.1 - Time 2024-05-20 11:39:09 - WARNING 
+IP: 127.0.0.1 - Time 2024-05-20 11:39:09 - ERROR 
