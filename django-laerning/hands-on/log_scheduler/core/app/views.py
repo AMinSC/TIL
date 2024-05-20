@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import Http404, HttpResponse, response
+from django.http import HttpResponse
 from django.views import View
 
 import logging
@@ -15,10 +14,8 @@ class Test(View):
         else:
             ip = request.META.get('REMOTE_ADDR')
             
-        logger.debug('IP: ' + ip)
         logger.info('IP: ' + ip)
-        logger.warning('IP: ' + ip)
         logger.error('IP: ' + ip)
         # print('Your log message... IP:' + ip)
 
-        return HttpResponse(f"hello, You'r IP is {ip}")
+        return HttpResponse(f"hello, You'r IP is {ip} and Celery Task Running")

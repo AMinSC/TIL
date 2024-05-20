@@ -1,5 +1,10 @@
-from celery import shared_task
+from core.celery import app
 
-@shared_task
-def say_hello():
-    print("hellow world!")
+import logging
+
+logger = logging.getLogger('request')
+
+@app.task()
+def write_log():
+    logger.info('Scheduled Log')
+    logger.error('Scheduled Log')

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Framework or Library
     'celery',
+    'django_celery_beat',
 
     # App
     'app',
@@ -145,9 +146,9 @@ LOGGING = {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "request_formatter",
             "filename": os.path.join(BASE_DIR, 'logs/access.log'),
-            "maxBytes": 1024000,
+            'maxBytes': 1024 * 1024 * 100,  # 100 mb
             "backupCount": 3
-        }
+        },
     },
     # 'filters': {
     #     'add_ip_address': {
@@ -158,16 +159,18 @@ LOGGING = {
         'request': {
             "level": "DEBUG",
             # 'filters': ['add_ip_address'],
-            "handlers": ["request"]
+            "handlers": ["request", ]
         },
     },
     "disable_existing_loggers": False
 }
 
 # Celery configurations
-CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Seoul'
+CELERY_ENABLE_UTC=False
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
