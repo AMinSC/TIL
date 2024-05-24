@@ -5,7 +5,10 @@ Today I Learned..
 [Java Contents](https://github.com/AMinSC/TIL/tree/main/JavaLearning)
 
 ## Django Learning
-[Django 교안](https://github.com/AMinSC/TIL/blob/main/django-laerning/teaching-plan/Django%EA%B5%90%EC%95%88.md)
+- [Django 교안](https://github.com/AMinSC/TIL/blob/main/django-laerning/teaching-plan/Django%EA%B5%90%EC%95%88.md)
+- [Django FBV(Function Based Views)](https://github.com/AMinSC/TIL/tree/main/django-laerning/hands-on/django-FBV)
+- [Django CBV(Class Based Views)](https://github.com/AMinSC/TIL/tree/main/django-laerning/hands-on/myapp-CBV)
+- [Django REST Framework CBV](https://github.com/AMinSC/TIL/tree/main/django-laerning/hands-on/restapp-CBV)
 
 ## Data Structures (With Python, C)
 - [Data Structures With Python]()
