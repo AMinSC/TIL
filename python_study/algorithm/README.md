@@ -11,3 +11,16 @@
     - 따라서 sys.stdin.readline()을 사용하면 입력 속도가 개선되며, 특히 대량의 입력을 처리할 때 유용
 
 ---
+
+## Python Library itertools
+
+### Combinatoric iterators
+| Examples                                 	| Results                                         	|
+|------------------------------------------	|-------------------------------------------------	|
+| product('ABCD', repeat=2)                	| AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD 	|
+| permutations('ABCD', 2)                  	| AB AC AD BA BC BD CA CB CD DA DB DC             	|
+| combinations('ABCD', 2)                  	| AB AC AD BC BD CD                               	|
+| combinations_with_replacement('ABCD', 2) 	| AA AB AC AD BB BC BD CC CD DD                   	|
+
+- 해당 메서드의 경우 이터레이블한 구조체로 만들어 줘야 스퀀스값을 확인할 수 있음
+    - 단, 이터레이터한 객체이기 때문에(`__iter__`, `__next__` 매직메서드를 가지고 있음) 반복문이나 `next()` 함수를 활용할 수 있음
