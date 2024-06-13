@@ -1,15 +1,5 @@
 def solution(board, moves):
     answer = 0
-    # 불필요한 row값 제거
-    i = 0
-    board_len = len(board)
-    while i < board_len:
-        numbers = board[i]
-        if sum(numbers) == 0:
-            del board[i]
-            board_len = len(board)
-        else:
-            i += 1
             
     # 인형뽑기의 번호에 맞는 값 넣어주기
     baskets = []
@@ -17,6 +7,7 @@ def solution(board, moves):
     for move in moves:
         i = 0
         while i < new_board_len:
+            
             dol = board[i][move - 1]
             if dol != 0:
                 baskets.append(dol)
