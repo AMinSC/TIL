@@ -7,7 +7,12 @@ def solution(board, moves):
     for move in moves:
         i = 0
         while i < new_board_len:
-            
+            # 불필요한 row값 제거
+            if sum(board[i]) == 0 and i == 0:
+                del board[i]
+                new_board_len = len(board)
+                if new_board_len == 0:
+                    break
             dol = board[i][move - 1]
             if dol != 0:
                 baskets.append(dol)
