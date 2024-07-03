@@ -11,6 +11,7 @@ Today I Learned..
 - [Django REST Framework CBV](https://github.com/AMinSC/TIL/tree/main/django-laerning/hands-on/restapp-CBV)
 
 ## Data Structures (With Python, C)
+- [Data Structures]()
 - [Data Structures With Python]()
 - [Data Structures With C]()
 
