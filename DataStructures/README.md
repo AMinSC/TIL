@@ -1,4 +1,3 @@
-# Data Structures
-
-- 순차 구조(Sequential Structure)
-- 선택 구조(Select Structure)
+# Data Structures (With Python, C)
+## [Data Structures With Python]()
+## [Data Structures With C]()
