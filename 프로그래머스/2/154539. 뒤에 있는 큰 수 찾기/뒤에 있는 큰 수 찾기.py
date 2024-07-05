@@ -1,25 +1,14 @@
 def solution(numbers):
-    answer = []
+    num_len = len(numbers)
+    # 답변 리스트를 인자값의 길이만큼 -1로 초기화
+    answer = [-1] * num_len
     stack = []
-    # 뒷 큰수를 구하기 위해 리스트를 반전시킴
-    for number in reversed(numbers):
+    for i in range(num_len):
+        # stack에 top의 위치한 numbers배열의 숫자와 현재 숫자를 비교하여, 
+        # 현재 숫자가 클 경우 stack에서 pop한 인덱스 요소의 답변 리스트값을 현재 값으로 대입
+        # 즉, 현재 숫자보다 작은 앞의 값들을 현재 값으로 대입
+        while stack and numbers[stack[-1]] < numbers[i]:
+            answer[stack.pop()] = numbers[i]
         
-        # 스택에 요소값이 있을 경우, 현재 숫자와 스택의 맨 위의 값을 비교
-        while len(stack) > 0:
-            # 스택의 맨 위의 값이 크다면 답변 리스트에 값을 추가하고 스택에 추가
-            if stack[-1] > number:
-                answer.append(stack[-1])
-                stack.append(number)
-                break
-            # 그렇지 않다면 스택의 값을 제거
-            else:
-                stack.pop()
-                
-        # 스택에 값이 없다면 현재 숫자를 스택에 넣어두고, 답변 리시트에 -1 추가
-        # 예를 들어 스택의 값이 현재의 값보다 모두 적을 경우, 
-        # 위의 while 문을 통해 모든 값이 제거된 후 기능을 수행
-        if len(stack) == 0:
-            stack.append(number)
-            answer.append(-1)
-    
-    return answer[::-1]
+        stack.append(i)
+    return answer
