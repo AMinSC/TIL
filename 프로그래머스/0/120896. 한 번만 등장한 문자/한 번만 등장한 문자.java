@@ -1,32 +1,23 @@
 import java.util.Map;
-import java.util.List;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 class Solution {
     public String solution(String s) {
         // 문자의 빈도를 저장할 맵
-        Map<Character, Long> charCountMap = s.chars()
-            .mapToObj(c -> (char) c)
-            .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
+        Map<Character, Integer> charCountMap = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            charCountMap.put(c, charCountMap.getOrDefault(c, 0) + 1);
+        }
 
-        // 빈도 1인 문자만 answer에 추가
-        List<Character> answerList = charCountMap.entrySet().stream()
+        // 빈도 1인 문자만 필터링하고 정렬하여 결과 문자열 생성
+        String result = charCountMap.entrySet().stream()
             .filter(entry -> entry.getValue() == 1)
             .map(Map.Entry::getKey)
             .sorted()
-            .collect(Collectors.toList());
+            .map(String::valueOf)
+            .collect(Collectors.joining());
 
-        // 빈도 1인 문자가 없으면 빈 문자열 반환
-        if (answerList.isEmpty()) {
-            return "";
-        }
-
-        // 리스트를 문자열로 변환하여 반환
-        StringBuilder answer = new StringBuilder();
-        for (char c : answerList) {
-            answer.append(c);
-        }
-
-        return answer.toString();
+        return result;
     }
 }
