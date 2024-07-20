@@ -16,10 +16,6 @@ class Solution {
             }
         });
         
-        for (int[] dot: dots) {
-            System.out.println(Arrays.toString(dot));
-        }
-        
         int x = Math.abs(dots[0][0] - dots[2][0]);
         int y = Math.abs(dots[0][1] - dots[1][1]);
         answer = x * y;
