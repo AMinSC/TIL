@@ -1,10 +1,7 @@
 def solution(quiz):
-    result = []
+    answer = []
     
     for q in quiz:
-        formula, answer = q.split("=")
-        if eval(formula) == int(answer):
-            result.append("O")
-        else:
-            result.append("X")
-    return result
+        q = q.replace("=", "==")
+        answer.append("O" if eval(q) else "X")
+    return answer
