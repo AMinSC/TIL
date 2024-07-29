@@ -1,5 +1,8 @@
 def solution(common):
-    first = common[-1] - common[-2]
-    second = common[-2] - common[-3]
-    if first == second: return (common[-1] - common[-2]) + common[-1];
-    else: return (common[-1] // common[-2]) * common[-1]; 
+    answer = 0
+    a, b, c = common[:3]
+    if (b - a) == (c - b):
+        answer = common[-1] + (b - a)
+    else:
+        answer = common[-1] * (b // a)
+    return answer
