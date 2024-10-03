@@ -18,4 +18,4 @@ Today I Learned..
 - [Junior Security](https://github.com/AMinSC/TIL/tree/main/junior_security)
 
 ## AI Conference
-['google Gemini api' hands on for beginners](https://github.com/AMinSC/TIL/JejuConference/BuildwithAI)
+['google Gemini api' hands on for beginners](https://github.com/AMinSC/TIL/tree/main/JejuConference)
