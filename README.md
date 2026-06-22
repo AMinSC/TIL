@@ -6,14 +6,6 @@ Today I Learned..
 
 ## Django Learning
 - [Django 교안](https://github.com/AMinSC/TIL/blob/main/django-laerning/teaching-plan/Django%EA%B5%90%EC%95%88.md)
-- [Django FBV(Function Based Views)](https://github.com/AMinSC/TIL/tree/main/django-laerning/hands-on/django-FBV)
-- [Django CBV(Class Based Views)](https://github.com/AMinSC/TIL/tree/main/django-laerning/hands-on/myapp-CBV)
-- [Django REST Framework CBV](https://github.com/AMinSC/TIL/tree/main/django-laerning/hands-on/restapp-CBV)
-
-## Data Structures (With Python, C)
-- [Data Structures](https://github.com/AMinSC/TIL/blob/main/DataStructures/README.md)
-- [Data Structures With Python]()
-- [Data Structures With C]()
 
 ## Algorithm
 - [백준](https://github.com/AMinSC/TIL/tree/main/%EB%B0%B1%EC%A4%80)
@@ -26,4 +18,4 @@ Today I Learned..
 - [Junior Security](https://github.com/AMinSC/TIL/tree/main/junior_security)
 
 ## AI Conference
-['google Gemini api' hands on for beginners](https://github.com/AMinSC/TIL/JejuConference/BuildwithAI)
+['google Gemini api' hands on for beginners](https://github.com/AMinSC/TIL/tree/main/JejuConference)

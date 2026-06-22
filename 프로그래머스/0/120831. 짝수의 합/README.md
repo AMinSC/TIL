@@ -1,10 +1,10 @@
 # [level 0] 짝수의 합 - 120831 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120831?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120831?language=csharp) 
 
 ### 성능 요약
 
-메모리: 74.4 MB, 시간: 0.02 ms
+메모리: 31.3 MB, 시간: 0.16 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 05월 31일 00:00:12
+2025년 10월 03일 10:45:38
 
 ### 문제 설명
 
