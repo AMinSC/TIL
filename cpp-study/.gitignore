@@ -1,0 +1,15 @@
+### C++ / CMake ###
+cmake-build-debug/
+cmake-build-release/
+/out/
+/build/
+
+### JetBrains (CLion / Rider) 설정 ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### OS 관련 임시 파일 ###
+.DS_Store
+Thumbs.db
