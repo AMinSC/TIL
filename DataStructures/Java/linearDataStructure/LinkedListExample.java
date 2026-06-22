@@ -95,6 +95,10 @@ public class LinkedListExample<T> {
 
         System.out.println("Search for World in String List: " + stringList.search("World"));
         System.out.println("Search for Java in String List: " + stringList.search("Java"));
+        
+        String version = System.getProperty("java.version");
+
+        System.out.println("JAVA Version : " + version);
 	}
 
 }
