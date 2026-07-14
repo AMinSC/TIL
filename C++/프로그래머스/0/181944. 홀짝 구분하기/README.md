@@ -1,10 +1,10 @@
 # [level 0] 홀짝 구분하기 - 181944 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181944?language=cpp) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181944) 
 
 ### 성능 요약
 
-메모리: 4.64 MB, 시간: 1.55 ms
+메모리: 4.7 MB, 시간: 3.77 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2026년 07월 14일 23:46:15
+2026년 07월 14일 23:51:30
 
 ### 문제 설명
 
